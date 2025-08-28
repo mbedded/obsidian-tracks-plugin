@@ -1,0 +1,42 @@
+name: Release Obsidian plugin
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+      
+      - name: Build plugin
+        run: |
+          npm install
+          npm run build
+      
+      - name: Create archive
+        run: |
+          REPO_NAME=$(basename ${{ github.repository }})
+          git archive --format=tar.gz --prefix="${REPO_NAME}-${{ github.ref_name }}/" -o "${REPO_NAME}-${{ github.ref_name }}.tar.gz" HEAD
+      
+      
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Release ${{ github.ref_name }}"
+          fail_on_unmatched_files: true
+          files: |
+            main.js
+            manifest.json
+            ${{ github.event.repository.name }}-${{ github.ref_name }}.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
