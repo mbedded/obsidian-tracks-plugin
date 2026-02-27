@@ -1,7 +1,7 @@
 {
   "id": "web-task-dashboard",
   "name": "Web Task Dashboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minAppVersion": "1.11.0",
   "description": "Integrate tasks from external services directly into your workspace to minimize distractions.",
   "author": "mbedded",

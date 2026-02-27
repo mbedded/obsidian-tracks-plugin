@@ -1,6 +1,6 @@
 {
   "name": "web-task-dashboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Integrates your tasks from web services into Obsidian, allowing you to stay in Obsidian without distraction.",
   "main": "main.js",
   "scripts": {
