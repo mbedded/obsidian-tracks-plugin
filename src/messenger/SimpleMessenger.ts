@@ -6,6 +6,18 @@ import type { IMessenger, EventMap } from "./IMessenger";
  */
 export class SimpleMessenger implements IMessenger {
 
+  private static instance: IMessenger;
+
+  private constructor() {
+  }
+
+  public static getInstance(): IMessenger {
+    if (!SimpleMessenger.instance) {
+      SimpleMessenger.instance = new SimpleMessenger();
+    }
+    return SimpleMessenger.instance;
+  }
+
   private listeners: {
     [K in keyof EventMap]?: Array<(payload: EventMap[K]) => void>;
   } = {};
@@ -30,3 +42,4 @@ export class SimpleMessenger implements IMessenger {
   }
 }
 
+export default SimpleMessenger.getInstance();
