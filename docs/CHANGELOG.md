@@ -2,6 +2,10 @@
 
 ## Version 1.x
 
+### 1.0.1
+
+- Minor code changes to satisfy Obsidian ESLint requirements for listing this plugin in the official plugin repository. 
+
 ### 1.0.0
 
 #### Features
