@@ -32,4 +32,13 @@ export interface IMessenger {
    * @return {void} Does not return a value.
    */
   send<K extends keyof EventMap>(event: K, payload: EventMap[K]): void;
+
+  /**
+   * Unregisters an event handler for a specific event type.
+   *
+   * @param {K} event - The name of the event to unregister the handler from.
+   * @param {(payload: EventMap[K]) => void} handler - The event handler function to be removed.
+   * @return {void} Indicates that the handler has been successfully unregistered.
+   */
+  unregister<K extends keyof EventMap>(event: K, handler: (payload: EventMap[K]) => void): void;
 }

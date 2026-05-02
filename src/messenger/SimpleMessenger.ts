@@ -40,6 +40,15 @@ export class SimpleMessenger implements IMessenger {
       handler(payload);
     }
   }
+
+  public unregister<K extends keyof EventMap>(event: K, handler: (payload: EventMap[K]) => void): void {
+    const handlers = this.listeners[event];
+    if (!handlers) {
+      return;
+    }
+    const filteredHandlers = handlers.filter((registeredHandler) => registeredHandler !== handler);
+    this.listeners[event] = filteredHandlers as typeof this.listeners[K];
+  }
 }
 
 export default SimpleMessenger.getInstance();
