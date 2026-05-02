@@ -17,7 +17,8 @@
     "service-unreachable-header": "Dienst nicht erreichbar"
   },
   "commands": {
-    "open-dashboard": "Aufgabenübersicht öffnen"
+    "open-dashboard": "Aufgabenübersicht öffnen",
+    "reload-tasks": "Aufgaben neu laden"
   },
   "view": {
     "btn-delete-text": "Löschen",
@@ -28,5 +29,9 @@
     "saving": "Wird gespeichert...",
     "title": "Aufgabenübersicht",
     "txt-add-new-task": "Fügen Sie hier eine Aufgabe hinzu. Bestätigen Sie mit der RETURN-Taste..."
+  },
+  "notice": {
+    "command-reload": "Aufgaben werden neu geladen...",
+    "task-load-completed": "Laden der Aufgaben abgeschlossen."
   }
 }

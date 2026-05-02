@@ -17,7 +17,8 @@
     "service-unreachable-header": "Service unreachable"
   },
   "commands": {
-    "open-dashboard": "Open task dashboard"
+    "open-dashboard": "Open task dashboard",
+    "reload-tasks": "Reload tasks"
   },
   "view": {
     "btn-delete-text": "Delete",
@@ -28,5 +29,9 @@
     "saving": "Saving...",
     "title": "Task Dashboard",
     "txt-add-new-task": "Add a task here. Confirm by pressing RETURN..."
+  },
+  "notice": {
+    "command-reload": "Reloading tasks...",
+    "task-load-completed": "Finished loading tasks."
   }
 }

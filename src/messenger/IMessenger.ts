@@ -7,6 +7,7 @@
  */
 export type EventMap = {
   reload: void;
+  show_notice: string;
 };
 
 /**

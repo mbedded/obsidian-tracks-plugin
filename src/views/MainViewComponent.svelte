@@ -5,7 +5,7 @@
   import SpinnerComponent from "./SpinnerComponent.svelte";
   import ContextComponent from "./ContextComponent.svelte";
   import ErrorComponent from "./ErrorComponent.svelte";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { SimpleMessenger } from "../messenger/SimpleMessenger";
 
   interface Props {
@@ -25,9 +25,13 @@
   let contexts: ContextItem[] = $state([]);
 
   onMount(async () => {
-    messenger.on("reload", () => initialize());
+    messenger.on("reload", initialize);
 
     await initialize()
+  });
+
+  onDestroy(() => {
+    messenger.unregister("reload", initialize);
   });
 
   async function initialize() {
@@ -52,6 +56,8 @@
 
     loading = false;
     hasError = pingResult.isOk() == false;
+
+    messenger.send("show_notice", t("notice.task-load-completed"));
   }
 </script>
 
