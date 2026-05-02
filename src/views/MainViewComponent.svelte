@@ -6,6 +6,7 @@
   import ContextComponent from "./ContextComponent.svelte";
   import ErrorComponent from "./ErrorComponent.svelte";
   import { onMount } from "svelte";
+  import { SimpleMessenger } from "../messenger/SimpleMessenger";
 
   interface Props {
     adapter: ITaskAdapter;
@@ -15,6 +16,7 @@
     adapter,
   }: Props = $props();
 
+  let messenger = SimpleMessenger.getInstance();
   let loading = $state(true);
   let hasError = $state(false);
   let errorHeader = $state("error-header");
@@ -23,11 +25,17 @@
   let contexts: ContextItem[] = $state([]);
 
   onMount(async () => {
+    messenger.on("reload", () => initialize());
+
+    await initialize()
+  });
+
+  async function initialize() {
     loading = true;
     hasError = false;
 
     // Check if service is reachable
-    var pingResult = await adapter.ping();
+    let pingResult = await adapter.ping();
 
     if (pingResult.isReachable == false) {
       errorHeader = t("messages.service-unreachable-header");
@@ -44,7 +52,7 @@
 
     loading = false;
     hasError = pingResult.isOk() == false;
-  });
+  }
 </script>
 
 <style>

@@ -7,13 +7,16 @@ import { SettingTab } from "./settings/SettingTab";
 import { t } from "./localizer/Localizer";
 
 export default class TracksPlugin extends Plugin {
-  settings: TracksPluginSettings;
-
+  private _settings: TracksPluginSettings;
 
   constructor(app: App, manifest: PluginManifest) {
     super(app, manifest);
 
     initializeLocalization();
+  }
+
+  public get settings() {
+    return this._settings;
   }
 
   async onload() {
@@ -51,7 +54,7 @@ export default class TracksPlugin extends Plugin {
   }
 
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this._settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
   }
 
   async saveSettings() {
