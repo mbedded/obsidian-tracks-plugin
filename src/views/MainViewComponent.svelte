@@ -5,7 +5,7 @@
   import SpinnerComponent from "./SpinnerComponent.svelte";
   import ContextComponent from "./ContextComponent.svelte";
   import ErrorComponent from "./ErrorComponent.svelte";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   import { SimpleMessenger } from "../messenger/SimpleMessenger";
 
   interface Props {
@@ -24,17 +24,19 @@
 
   let contexts: ContextItem[] = $state([]);
 
-  onMount(async () => {
+  onMount(() => {
     messenger.on("reload", initialize);
 
-    await initialize()
+    void initialize();
+
+    // A function can be returned, which will be called automatically when the component is destroyed.
+    // So no separate "onDestroy" is needed.
+    return () => {
+      messenger.unregister("reload", initialize);
+    };
   });
 
-  onDestroy(() => {
-    messenger.unregister("reload", initialize);
-  });
-
-  async function initialize() {
+  async function initialize(): Promise<void> {
     loading = true;
     hasError = false;
 
