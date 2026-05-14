@@ -17,9 +17,12 @@ To install the plugin in Obsidian, use one of the following methods:
 
 ## Installation via Community Plugins
 
-{: .note }
-> As of this writing, the plugin is not listed in the official plugin repository yet.
-> The documentation will be updated as soon as the plugin becomes available.
+This plugin is listed in the official plugin respository:
+[Web Task Dashboard](https://community.obsidian.md/plugins/web-task-dashboard)
+
+- Open _Obsidian > Settings > Community Plugins_
+- Enable the community plugins if needed.
+- Search for _Web Task Dashboard_ and install it.
 
 ## Manual installation
 
