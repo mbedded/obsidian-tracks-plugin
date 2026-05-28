@@ -22,8 +22,12 @@ Currently, the following services are supported:
 
 ### Installation via Community Plugins
 
-As of writing, this method is not supported.
-This plugin is not listed in the official plugin repository yet.
+This plugin is listed in the official plugin respository:
+[Web Task Dashboard](https://community.obsidian.md/plugins/web-task-dashboard)
+
+- Open _Obsidian > Settings > Community Plugins_
+- Enable the community plugins if needed.
+- Search for _Web Task Dashboard_ and install it.
 
 ### Manual installation
 
