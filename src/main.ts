@@ -16,6 +16,8 @@ export default class TracksPlugin extends Plugin {
   constructor(app: App, manifest: PluginManifest) {
     super(app, manifest);
 
+    this._settings = DEFAULT_SETTINGS;
+
     initializeLocalization();
     this.registerEvents();
   }

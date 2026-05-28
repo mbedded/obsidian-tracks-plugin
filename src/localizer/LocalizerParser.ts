@@ -1,5 +1,5 @@
-import de from "locales/locale.de.json";
-import en from "locales/locale.en.json";
+import de from "../../locales/locale.de.json";
+import en from "../../locales/locale.en.json";
 
 /**
  * The `LocalizerParser` class is designed to handle the parsing of nested localization files
