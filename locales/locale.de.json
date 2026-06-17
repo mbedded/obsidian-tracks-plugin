@@ -18,7 +18,8 @@
   },
   "commands": {
     "open-dashboard": "Aufgabenübersicht öffnen",
-    "reload-tasks": "Aufgaben neu laden"
+    "reload-tasks": "Aufgaben neu laden",
+    "create-task": "Neue Aufgabe erstellen"
   },
   "view": {
     "btn-delete-text": "Löschen",

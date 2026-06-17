@@ -6,6 +6,7 @@ import { TracksAdapter } from "./adapters/TracksAdapter";
 import { SettingTab } from "./settings/SettingTab";
 import { t } from "./localizer/Localizer";
 import { SimpleMessenger } from "./messenger/SimpleMessenger";
+import { CreateTaskModal } from "./modals/CreateTaskModal";
 
 export default class TracksPlugin extends Plugin {
   private static readonly DEFAULT_NOTICE_TIME: number = 3000;
@@ -69,6 +70,14 @@ export default class TracksPlugin extends Plugin {
       callback: () => {
         this.showNotice(t("notice.command-reload"))
         this.messenger.send("reload", undefined);
+      }
+    })
+
+    this.addCommand({
+      id: "create-task",
+      name: t("commands.create-task"),
+      callback: () => {
+        new CreateTaskModal(this.app).open();
       }
     })
   }

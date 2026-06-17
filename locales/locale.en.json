@@ -18,7 +18,8 @@
   },
   "commands": {
     "open-dashboard": "Open task dashboard",
-    "reload-tasks": "Reload tasks"
+    "reload-tasks": "Reload tasks",
+    "create-task": "Create new task"
   },
   "view": {
     "btn-delete-text": "Delete",
