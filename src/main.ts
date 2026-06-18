@@ -7,17 +7,17 @@ import { SettingTab } from "./settings/SettingTab";
 import { t } from "./localizer/Localizer";
 import { SimpleMessenger } from "./messenger/SimpleMessenger";
 import { CreateTaskModal } from "./modals/CreateTaskModal";
+import type { ITaskAdapter } from "./adapters/ITaskAdapter";
 
 export default class TracksPlugin extends Plugin {
   private static readonly DEFAULT_NOTICE_TIME: number = 3000;
 
   private _settings: TracksPluginSettings;
   private messenger = SimpleMessenger.getInstance();
+  private adapter: ITaskAdapter;
 
   constructor(app: App, manifest: PluginManifest) {
     super(app, manifest);
-
-    this._settings = DEFAULT_SETTINGS;
 
     initializeLocalization();
     this.registerEvents();
@@ -35,24 +35,27 @@ export default class TracksPlugin extends Plugin {
   }
 
   async onload() {
-    this.registerView(
-      VIEW_TYPE_MAIN,
-      (leaf) => {
-        const adapter = new TracksAdapter(this.settings.tracksUrl, this.settings.getBasicToken(), requestUrl);
-        return new MainViewModel(leaf, adapter);
-      }
-    );
+    await this.loadSettings();
 
+    // This adds a settings tab so the user can configure various aspects of the plugin
+    this.addSettingTab(new SettingTab(this.app, this));
+
+    // Sidebar
     this.addRibbonIcon("square-check-big", t("commands.open-dashboard"), async () => {
       await this.activateView();
     });
 
-    await this.loadSettings();
-
+    // Commands
     this.registerCommands();
 
-    // This adds a settings tab so the user can configure various aspects of the plugin
-    this.addSettingTab(new SettingTab(this.app, this));
+    // Views
+    this.registerView(
+      VIEW_TYPE_MAIN,
+      (leaf) => {
+        const adapter = this.getAdapter();
+        return new MainViewModel(leaf, adapter);
+      }
+    );
   }
 
   private registerCommands() {
@@ -77,7 +80,8 @@ export default class TracksPlugin extends Plugin {
       id: "create-task",
       name: t("commands.create-task"),
       callback: () => {
-        new CreateTaskModal(this.app).open();
+        const adapter = this.getAdapter();
+        new CreateTaskModal(this.app, adapter).open();
       }
     })
   }
@@ -91,6 +95,10 @@ export default class TracksPlugin extends Plugin {
 
   async saveSettings() {
     await this.saveData(this.settings);
+  }
+
+  private getAdapter(): ITaskAdapter {
+    return this.adapter ??= new TracksAdapter(this.settings.tracksUrl, this.settings.getBasicToken(), requestUrl);
   }
 
   async activateView() {
