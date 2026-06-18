@@ -12,8 +12,7 @@ export const VIEW_TYPE_MAIN = "main-view";
  */
 export class MainViewModel extends ItemView {
   private readonly taskAdapter: ITaskAdapter;
-
-  mainView: ReturnType<typeof MainViewComponent> | undefined;
+  private mainView: ReturnType<typeof MainViewComponent> | undefined;
 
   constructor(leaf: WorkspaceLeaf, taskAdapter: ITaskAdapter) {
     super(leaf);
