@@ -1,18 +1,43 @@
 <script lang="ts">
+  import { onMount, tick } from "svelte";
+  import type { ContextItem } from "../adapters/TaskClasses";
+
+  interface Props {
+    contexts: ContextItem[];
+    onSubmit: (title: string, description: string) => Promise<void>;
+  }
+
+  let {
+    contexts,
+    onSubmit
+  }: Props = $props();
+
+  const CONTEXT_ID_UNDEFINED = -1;
   let title = $state("");
   let description = $state("");
+  let selectedContextId = $state(0);
+
+  let titleInput: HTMLInputElement;
 
   function handleKeyDown(event: KeyboardEvent) {
     if (event.key === "Enter" && event.ctrlKey) {
-      console.log("ctrl + enter pressed");
       event.preventDefault();
       handleSubmit();
     }
   }
 
+  onMount(async () => {
+    await tick();
+    selectedContextId = contexts[0]?.id ?? CONTEXT_ID_UNDEFINED;
+    titleInput.focus();
+  });
+
   function handleSubmit() {
-    // Handle submit here
-    console.log({title, description});
+    if (title.trim().length === 0) {
+      return;
+    }
+
+    onSubmit(title.trim(), description.trim());
   }
 
   // todo: localize
@@ -21,28 +46,44 @@
 <div class="modal-content task-dialog">
   <h2>Create new task</h2>
 
-  <!-- todo: add context selection where task is created -->
+  <!-- Context dropdown -->
+  <div class="setting-item setting-item-custom">
+    <div class="setting-item-info">
+      <label class="setting-item-name" for="context">Context</label>
+    </div>
 
+    <div class="setting-item-control">
+      <select id="context" bind:value={selectedContextId} class="dropdown">
+        {#each contexts as context}
+          <option value={context.id}>{context.name}</option>
+        {/each}
+      </select>
+    </div>
+  </div>
+
+  <!-- Title textbox -->
   <div class="setting-item setting-item-custom">
     <div class="setting-item-info">
       <label class="setting-item-name" for="title">Title</label>
     </div>
 
     <div class="setting-item-control">
-      <input id="title" type="text" placeholder="Enter title"
+      <input id="title" type="text" placeholder="Enter a short, descriptive title"
+             bind:this={titleInput}
              bind:value={title}
              onkeydown="{handleKeyDown}"
       />
     </div>
   </div>
 
+  <!-- Description textarea -->
   <div class="setting-item setting-item-custom">
     <div class="setting-item-info">
       <label class="setting-item-name" for="description">Description</label>
     </div>
 
     <div class="setting-item-control">
-        <textarea id="description" rows="5" placeholder="Write text"
+        <textarea id="description" rows="5" placeholder="Provide additional information for this task"
                   bind:value={description}
                   onkeydown="{handleKeyDown}"
         ></textarea>
@@ -53,7 +94,10 @@
     <div class="setting-item-info"></div>
 
     <div class="setting-item-control">
-      <button type="button" class="btn-submit" onclick="{handleSubmit}">Create task</button>
+      <button type="button" class="btn-submit"
+              disabled={title.trim().length === 0}
+              onclick="{handleSubmit}">Create task
+      </button>
     </div>
   </div>
 </div>
@@ -65,11 +109,6 @@
 
   .task-dialog textarea {
     resize: vertical;
-  }
-
-  .task-dialog input,
-  .task-dialog textarea {
-    width: 100%;
   }
 
   .task-dialog-actions :global(.setting-item-control) {
@@ -90,6 +129,11 @@
      complex CSS-Selectors/Syntax like :global(..) */
   .setting-item-custom {
     border-top: none !important;
+    align-items: flex-start !important;
   }
 
+  .task-dialog input,
+  .task-dialog textarea {
+    width: 400px !important;
+  }
 </style>
