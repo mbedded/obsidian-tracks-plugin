@@ -11,6 +11,7 @@ import type { ITaskAdapter } from "./adapters/ITaskAdapter";
 
 export default class TracksPlugin extends Plugin {
   private static readonly DEFAULT_NOTICE_TIME: number = 3000;
+  private static readonly ERROR_NOTICE_TIME: number = 15000;
 
   private _settings: TracksPluginSettings;
   private messenger = SimpleMessenger.getInstance();
@@ -26,6 +27,12 @@ export default class TracksPlugin extends Plugin {
   private registerEvents() {
     this.messenger.on("show_notice", message => {
         this.showNotice(message);
+      }
+    )
+
+    this.messenger.on("show_notice_error", message => {
+        message = `${t("notice.prefix-error")}: ${message}`;
+        this.showNotice(message, TracksPlugin.ERROR_NOTICE_TIME);
       }
     )
   }

@@ -8,6 +8,7 @@
 export type EventMap = {
   reload: void;
   show_notice: string;
+  show_notice_error: string;
 };
 
 /**

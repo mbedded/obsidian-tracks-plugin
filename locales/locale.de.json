@@ -33,6 +33,7 @@
   },
   "notice": {
     "command-reload": "Aufgaben werden neu geladen...",
+    "prefix-error": "Fehler",
     "task-load-completed": "Laden der Aufgaben abgeschlossen."
   }
 }

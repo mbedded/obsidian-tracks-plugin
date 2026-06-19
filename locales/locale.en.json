@@ -33,6 +33,7 @@
   },
   "notice": {
     "command-reload": "Reloading tasks...",
+    "prefix-error": "Error",
     "task-load-completed": "Finished loading tasks."
   }
 }
