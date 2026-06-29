@@ -5,6 +5,7 @@
   import SpinnerComponent from "./SpinnerComponent.svelte";
   import TaskComponent from "./TaskComponent.svelte";
   import { t } from "../localizer/Localizer";
+  import { SimpleMessenger } from "../messenger/SimpleMessenger";
 
   interface Props {
     adapter: ITaskAdapter;
@@ -16,13 +17,21 @@
     adapter,
   }: Props = $props();
 
+  let messenger = SimpleMessenger.getInstance();
+
   let isLoading = $state(false);
   let isSaving = $state(false);
   let tasks: TaskItem[] = $state([]);
   let newTaskText = $state("");
 
-  onMount(async () => {
-    await initialize()
+  onMount(() => {
+    messenger.on("task_created", handleTaskCreated);
+
+    void initialize();
+
+    return () => {
+      messenger.unregister("task_created", handleTaskCreated);
+    };
   });
 
   async function initialize() {
@@ -67,6 +76,14 @@
     } finally {
       isSaving = false;
     }
+  }
+
+  function handleTaskCreated({taskId, contextId, title}: { taskId: number, contextId: number, title: string }) {
+    if (context.id != contextId) {
+      return;
+    }
+
+    tasks.push(new TaskItem(taskId, title));
   }
 </script>
 
