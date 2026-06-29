@@ -49,8 +49,8 @@ export async function realFetchRequest(request: RequestUrlParam | string): Reque
     // @ts-ignore, because 'resp.headers' works despite the error message
     headers: Promise.resolve(Object.fromEntries(resp.headers)),
     arrayBuffer: arrayBuffer,
-    json: Promise.resolve(json),
-    text: Promise.resolve(text)
+    json: json,
+    text: text
   } as unknown as RequestUrlResponsePromise;
 
   // Throw exception for non-2xx status codes like "fetch" does.

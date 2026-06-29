@@ -46,7 +46,7 @@ describe("With valid token", () => {
     expect(result.isOk()).toBeTruthy();
   })
 
-  testIf(!isCiBuild, "Get contexts should return 2 items", async () => {
+  testIf(!isCiBuild, "Get contexts should return 3 items", async () => {
     const sut = getInstance(TOKEN_LOCALHOST, realFetchRequest);
 
     const result = await sut.getActiveContexts();
@@ -54,7 +54,7 @@ describe("With valid token", () => {
     expect(result).toHaveLength(3);
   });
 
-  testIf(!isCiBuild, "Get tasks should return 9 items", async () => {
+  testIf(!isCiBuild, "Get tasks should return 2 items", async () => {
     const sut = getInstance(TOKEN_LOCALHOST, realFetchRequest);
 
     const result = await sut.getActiveTasks(1);
