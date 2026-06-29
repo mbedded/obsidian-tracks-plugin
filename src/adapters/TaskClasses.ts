@@ -2,10 +2,12 @@
 export class TaskItem {
   public readonly id: number;
   public readonly title: string;
+  public readonly contextId: number;
 
-  constructor(id: number, title: string) {
+  constructor(id: number, title: string, contextId: number) {
     this.id = id;
     this.title = title;
+    this.contextId = contextId;
   }
 }
 

@@ -94,7 +94,7 @@ export class TracksAdapter implements ITaskAdapter {
 
     return contexts
       .filter((x) => x.state === "active")
-      .map((x) => new ContextItem(x.id, x.name))
+      .map((x) => new ContextItem(x["id"], x["name"]))
       .sort((a, b) => a.name.localeCompare(b.name));
   }
 
@@ -127,7 +127,7 @@ export class TracksAdapter implements ITaskAdapter {
       tasks = [tasks];
     }
 
-    return tasks.map((x) => new TaskItem(x.id, x.description));
+    return tasks.map((x) => new TaskItem(x["id"], x["description"], x["context-id"]));
   }
 
   public async toggleTaskState(taskId: number): Promise<boolean> {
@@ -171,7 +171,7 @@ export class TracksAdapter implements ITaskAdapter {
       const parts = location.split("/");
       const newId = parseInt(parts[parts.length - 1], 10);
 
-      return new TaskItem(newId, title);
+      return new TaskItem(newId, title, contextId);
     } catch (e) {
       // todo: handle error
       console.error("error creating task: " + e);
