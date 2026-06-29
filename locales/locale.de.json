@@ -10,6 +10,8 @@
     "tracks-username-header": "Benutzername"
   },
   "messages": {
+    "no-contexts-existing-description": "Bitte erstellen Sie einen Kontext in Ihrem Dienst, damit dieses Plugin funktionieren kann.",
+    "no-contexts-existing-header": "Keine Kontexte vorhanden",
     "server-http-error": "Der Server gab einen Fehler zurück. Der HTTP Code ist {code}",
     "service-authentication-failed-description": "Die Authentifizierung ist fehlgeschlagen. Bitte überprüfen Sie Ihre Einstellungen und vergewissern Sie sich, dass der Benutzername und das Passwort korrekt sind.",
     "service-authentication-failed-header": "Authentifizierung fehlgeschlagen",
@@ -17,16 +19,32 @@
     "service-unreachable-header": "Dienst nicht erreichbar"
   },
   "commands": {
-    "open-dashboard": "Aufgabenübersicht öffnen"
+    "open-dashboard": "Aufgabenübersicht öffnen",
+    "reload-tasks": "Aufgaben neu laden",
+    "create-task": "Neue Aufgabe erstellen"
   },
   "view": {
+    "btn-create-task": "Aufgabe erstellen",
     "btn-delete-text": "Löschen",
-    "lbl-service": "Service",
-    "loading-contexts": "Kontexte werden geladen...",
-    "loading-tasks": "Aufgaben werden geladen...",
-    "no-tasks-existing": "Keine Aufgaben vorhanden",
-    "saving": "Wird gespeichert...",
-    "title": "Aufgabenübersicht",
-    "txt-add-new-task": "Fügen Sie hier eine Aufgabe hinzu. Bestätigen Sie mit der RETURN-Taste..."
+    "btn-reload": "Neu laden",
+    "head-create-new-task": "Neue Aufgabe erstellen",
+    "lbl-context": "Kontext",
+    "lbl-dashboard": "Aufgabenübersicht",
+    "lbl-description": "Beschreibung",
+    "lbl-loading-contexts": "Kontexte werden geladen...",
+    "lbl-loading-tasks": "Aufgaben werden geladen...",
+    "lbl-optional": "(optional)",
+    "lbl-title": "Titel",
+    "plh-add-new-task": "Fügen Sie hier eine Aufgabe hinzu. Bestätigen Sie mit der RETURN-Taste...",
+    "plh-description": "Geben Sie zusätzliche Informationen zu dieser Aufgabe an",
+    "plh-title": "Geben Sie einen kurzen, beschreibenden Titel ein",
+    "txt-no-tasks-existing": "Keine Aufgaben vorhanden",
+    "txt-saving": "Wird gespeichert...",
+    "txt-service": "Service"
+  },
+  "notice": {
+    "command-reload": "Aufgaben werden neu geladen...",
+    "prefix-error": "Fehler",
+    "task-load-completed": "Laden der Aufgaben abgeschlossen."
   }
 }

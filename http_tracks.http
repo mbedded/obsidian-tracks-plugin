@@ -54,6 +54,8 @@ Content-Type: text/xml
 <todo>
   <description>My new todo</description>
   <context-id>1</context-id>
+  <notes>Some text
+line 2 text</notes>
 </todo>
 
 ### Delete todo

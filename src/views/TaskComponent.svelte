@@ -20,16 +20,20 @@
   let isDoneRunning = $state(false);
   let isDeleteRunning = $state(false);
 
-  async function OnClickDone() {
+  async function onClickDone() {
     isDoneRunning = true;
     await markTaskAsDone(task);
     isDoneRunning = false;
   }
 
-  async function OnClickDelete() {
+  async function onClickDelete() {
     isDeleteRunning = true;
     await deleteTask(task);
     isDeleteRunning = false;
+  }
+
+  async function onDoubleClickDescription() {
+    console.log("edit task " + task.title)
   }
 </script>
 
@@ -99,15 +103,16 @@
 </style>
 
 <div class="container">
-  <button type="button" class="btn-done" onclick={OnClickDone}>
+  <!-- Button to mark task as "done" -->
+  <button type="button" class="btn-done" onclick={onClickDone}>
     {#if !isDoneRunning}
       ✓
     {:else}
       <div class="spinner"></div>
     {/if}
   </button>
-  <span class="description">{task.description}</span>
-  <button type="button" class="btn-delete" onclick={OnClickDelete}>
+  <span class="description">{task.title}</span>
+  <button type="button" class="btn-delete" onclick={onClickDelete}>
     {#if !isDeleteRunning}
       {t("view.btn-delete-text")}
     {:else}

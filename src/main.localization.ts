@@ -13,7 +13,6 @@ export function initializeLocalization() {
   const parsedTexts = new LocalizerParser().getParsedFiles();
   localizer.initialize(parsedTexts);
 
-
   // Get UI language or fallback
   let locale = window.localStorage.getItem("language");
   if (!locale || !localizer.isLocale(locale)) {

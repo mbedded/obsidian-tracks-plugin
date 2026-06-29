@@ -6,6 +6,7 @@
   import ContextComponent from "./ContextComponent.svelte";
   import ErrorComponent from "./ErrorComponent.svelte";
   import { onMount } from "svelte";
+  import { SimpleMessenger } from "../messenger/SimpleMessenger";
 
   interface Props {
     adapter: ITaskAdapter;
@@ -15,6 +16,7 @@
     adapter,
   }: Props = $props();
 
+  let messenger = SimpleMessenger.getInstance();
   let loading = $state(true);
   let hasError = $state(false);
   let errorHeader = $state("error-header");
@@ -22,12 +24,24 @@
 
   let contexts: ContextItem[] = $state([]);
 
-  onMount(async () => {
+  onMount(() => {
+    messenger.on("reload", initialize);
+
+    void initialize();
+
+    // A function can be returned, which will be called automatically when the component is destroyed.
+    // So no separate "onDestroy" is needed.
+    return () => {
+      messenger.unregister("reload", initialize);
+    };
+  });
+
+  async function initialize(): Promise<void> {
     loading = true;
     hasError = false;
 
     // Check if service is reachable
-    var pingResult = await adapter.ping();
+    let pingResult = await adapter.ping();
 
     if (pingResult.isReachable == false) {
       errorHeader = t("messages.service-unreachable-header");
@@ -44,7 +58,14 @@
 
     loading = false;
     hasError = pingResult.isOk() == false;
-  });
+
+    messenger.send("show_notice", t("notice.task-load-completed"));
+  }
+
+  function invokeReload(): void {
+    messenger.send("reload", undefined);
+  }
+
 </script>
 
 <style>
@@ -62,21 +83,37 @@
     color: var(--text-muted);
     font-size: 0.7em;
   }
+
+  .reload-button {
+    align-self: flex-start;
+    width: fit-content;
+    margin-top: 1em;
+  }
 </style>
 
 <div class="container">
+  <!-- Loading spinner -->
   {#if loading}
-    <SpinnerComponent text={t("view.loading-contexts")} />
+    <SpinnerComponent text={t("view.lbl-loading-contexts")} />
   {/if}
 
+  <!-- Error handling -->
   {#if hasError}
     <ErrorComponent header={errorHeader} message={errorMessage} />
-    <!-- todo: add reload button so user can press button instead of close/open tab -->
+    <button type="button" class="mod-cta reload-button" onclick={invokeReload}>
+      {t("view.btn-reload")}
+    </button>
   {/if}
 
+  <!-- Entries after loading -->
   {#if !loading && !hasError}
-    <!-- todo: show hint  when context == empty-->
-    <!-- todo: add reload button when user adds context via web UI-->
+    {#if contexts.length === 0}
+      <ErrorComponent header={t("messages.no-contexts-existing-header")}
+                      message={t("messages.no-contexts-existing-description")} />
+      <button type="button" class="mod-cta reload-button" onclick={invokeReload}>
+        {t("view.btn-reload")}
+      </button>
+    {/if}
 
     {#each contexts as context}
       <ContextComponent adapter={adapter} context={context} />
@@ -85,7 +122,7 @@
 
   <!-- General information for the user at the bottom of the view -->
   <div class="placeholder">
-    <p>{t("view.lbl-service")}: {adapter.getDisplayInfo()}</p>
+    <p>{t("view.txt-service")}: {adapter.getDisplayInfo()}</p>
   </div>
 </div>
 

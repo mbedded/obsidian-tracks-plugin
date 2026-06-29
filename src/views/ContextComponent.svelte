@@ -5,6 +5,8 @@
   import SpinnerComponent from "./SpinnerComponent.svelte";
   import TaskComponent from "./TaskComponent.svelte";
   import { t } from "../localizer/Localizer";
+  import { SimpleMessenger } from "../messenger/SimpleMessenger";
+  import type { TaskCreatedEvent } from "../messenger/IMessenger";
 
   interface Props {
     adapter: ITaskAdapter;
@@ -16,13 +18,21 @@
     adapter,
   }: Props = $props();
 
+  let messenger = SimpleMessenger.getInstance();
+
   let isLoading = $state(false);
   let isSaving = $state(false);
   let tasks: TaskItem[] = $state([]);
-  let newTaskText = $state("");
+  let newTaskTitle = $state("");
 
-  onMount(async () => {
-    await initialize()
+  onMount(() => {
+    messenger.on("task_created", handleTaskCreated);
+
+    void initialize();
+
+    return () => {
+      messenger.unregister("task_created", handleTaskCreated);
+    };
   });
 
   async function initialize() {
@@ -52,21 +62,29 @@
       return;
     }
 
-    if (!newTaskText.trim()) {
+    if (!newTaskTitle.trim()) {
       return;
     }
 
     isSaving = true;
     try {
-      let newTask = await adapter.createTask(context.id, newTaskText);
+      let newTask = await adapter.createTask(context.id, newTaskTitle, "");
 
       if (newTask) {
         tasks = [...tasks, newTask];
-        newTaskText = "";
+        newTaskTitle = "";
       }
     } finally {
       isSaving = false;
     }
+  }
+
+  function handleTaskCreated(event: TaskCreatedEvent) {
+    if (context.id != event.contextId) {
+      return;
+    }
+
+    tasks.push(new TaskItem(event.taskId, event.title));
   }
 </script>
 
@@ -102,7 +120,7 @@
   <p class="header">{context.name} <span>({tasks.length})</span></p>
 
   {#if isLoading}
-    <SpinnerComponent text={t("view.loading-tasks")} />
+    <SpinnerComponent text={t("view.lbl-loading-tasks")} />
   {/if}
 
   {#if !!tasks && tasks.length }
@@ -113,17 +131,17 @@
     {/each}
 
   {:else}
-    <p class="no-tasks-existing">{t("view.no-tasks-existing")}</p>
+    <p class="no-tasks-existing">{t("view.txt-no-tasks-existing")}</p>
   {/if}
 
   <input class="txt-new-task"
          type="text"
-         bind:value={newTaskText}
+         bind:value={newTaskTitle}
          onkeydown={onTxtNewTaskKeyDown}
-         placeholder={t("view.txt-add-new-task")}
+         placeholder={t("view.plh-add-new-task")}
          readonly={isSaving} />
 
   {#if isSaving}
-    <SpinnerComponent text={t("view.saving")} />
+    <SpinnerComponent text={t("view.txt-saving")} />
   {/if}
 </div>

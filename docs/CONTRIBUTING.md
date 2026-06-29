@@ -54,5 +54,5 @@ Before opening a PR:
 - Avoid unrelated refactors, formatting, or drive-by changes unless agreed upon.
 
 > [!NOTE]
-> Minor issues and trivial changes like fixing typos or add translations
+> Minor issues and trivial changes like fixing typos or adding translations
 > can be pushed directly via a PR without creating an issue first.

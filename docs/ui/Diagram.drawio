@@ -1,0 +1,34 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.5 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36" version="28.2.5">
+  <diagram name="Page-1" id="qtIu7n8NatxFHioGXIzr">
+    <mxGraphModel dx="968" dy="711" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FhosfqGFuz5wBhtuXmdn-2" value="MainView.svelte" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#AEB9C9;strokeColor=none;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="770" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="FhosfqGFuz5wBhtuXmdn-3" value="Task Dashboard" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;glass=0;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="210" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FhosfqGFuz5wBhtuXmdn-4" value="ContextComponent.svelte" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#C4D0E2;strokeColor=none;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="150" width="730" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="FhosfqGFuz5wBhtuXmdn-5" value="ContextComponent.svelte" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#C4D0E2;strokeColor=none;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="730" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="FhosfqGFuz5wBhtuXmdn-7" value="TaskComponent.svelte" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=#dae8fc;strokeColor=none;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="75" y="180" width="695" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FhosfqGFuz5wBhtuXmdn-8" value="TaskComponent.svelte" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=#dae8fc;strokeColor=none;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="75" y="225" width="695" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FhosfqGFuz5wBhtuXmdn-9" value="TaskComponent.svelte" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=#dae8fc;strokeColor=none;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="75" y="270" width="695" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="FhosfqGFuz5wBhtuXmdn-10" value="TaskComponent.svelte" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;fillColor=#dae8fc;strokeColor=none;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="78" y="370" width="695" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
