@@ -5,7 +5,7 @@
 
   interface Props {
     contexts: ContextItem[];
-    onSubmit: (title: string, description: string) => Promise<void>;
+    onSubmit: (title: string, description: string, contextId: number) => Promise<void>;
   }
 
   let {
@@ -38,7 +38,7 @@
       return;
     }
 
-    onSubmit(title.trim(), description.trim());
+    onSubmit(title.trim(), description.trim(), selectedContextId);
   }
 </script>
 

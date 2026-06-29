@@ -30,20 +30,28 @@ export class CreateTaskModal extends Modal {
       target: this.contentEl,
       props: {
         contexts: contexts,
-        onSubmit: this.onSubmit,
+        onSubmit: this.onSubmit.bind(this)
       }
     });
   }
 
   async onClose() {
+    console.log("!!Adapter:", !!this.adapter);
     if (this.view) {
       await unmount(this.view);
     }
   }
 
   private async onSubmit(title: string, description: string, contextId: number) {
-    // let task = await this.adapter.createTask(contextId, title);
-    // todo: save task using adapter
+    if (!title) {
+      this.messenger.send("show_notice_error", "Title is required.");
+      return;
+    }
 
+    // todo: take and save description
+    const task = await this.adapter.createTask(contextId, title);
+
+    this.messenger.send("task_created", {taskId: task.id, contextId: contextId, title: title});
+    this.close();
   }
 }
