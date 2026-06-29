@@ -9,7 +9,13 @@ export type EventMap = {
   reload: void;
   show_notice: string;
   show_notice_error: string;
-  task_created: { taskId: number; contextId: number; title: string; };
+  task_created: TaskCreatedEvent;
+};
+
+export type TaskCreatedEvent = {
+  taskId: number;
+  contextId: number;
+  title: string
 };
 
 /**

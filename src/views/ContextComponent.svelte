@@ -6,6 +6,7 @@
   import TaskComponent from "./TaskComponent.svelte";
   import { t } from "../localizer/Localizer";
   import { SimpleMessenger } from "../messenger/SimpleMessenger";
+  import type { TaskCreatedEvent } from "../messenger/IMessenger";
 
   interface Props {
     adapter: ITaskAdapter;
@@ -78,12 +79,12 @@
     }
   }
 
-  function handleTaskCreated({taskId, contextId, title}: { taskId: number, contextId: number, title: string }) {
-    if (context.id != contextId) {
+  function handleTaskCreated(event: TaskCreatedEvent) {
+    if (context.id != event.contextId) {
       return;
     }
 
-    tasks.push(new TaskItem(taskId, title));
+    tasks.push(new TaskItem(event.taskId, event.title));
   }
 </script>
 
