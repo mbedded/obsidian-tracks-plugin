@@ -82,7 +82,7 @@
 
 <div class="container">
   {#if loading}
-    <SpinnerComponent text={t("view.loading-contexts")} />
+    <SpinnerComponent text={t("view.lbl-loading-contexts")} />
   {/if}
 
   {#if hasError}
@@ -101,7 +101,7 @@
 
   <!-- General information for the user at the bottom of the view -->
   <div class="placeholder">
-    <p>{t("view.service")}: {adapter.getDisplayInfo()}</p>
+    <p>{t("view.txt-service")}: {adapter.getDisplayInfo()}</p>
   </div>
 </div>
 

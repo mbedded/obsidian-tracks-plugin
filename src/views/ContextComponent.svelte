@@ -102,7 +102,7 @@
   <p class="header">{context.name} <span>({tasks.length})</span></p>
 
   {#if isLoading}
-    <SpinnerComponent text={t("view.loading-tasks")} />
+    <SpinnerComponent text={t("view.lbl-loading-tasks")} />
   {/if}
 
   {#if !!tasks && tasks.length }
@@ -113,17 +113,17 @@
     {/each}
 
   {:else}
-    <p class="no-tasks-existing">{t("view.no-tasks-existing")}</p>
+    <p class="no-tasks-existing">{t("view.txt-no-tasks-existing")}</p>
   {/if}
 
   <input class="txt-new-task"
          type="text"
          bind:value={newTaskText}
          onkeydown={onTxtNewTaskKeyDown}
-         placeholder={t("view.txt-add-new-task")}
+         placeholder={t("view.plh-add-new-task")}
          readonly={isSaving} />
 
   {#if isSaving}
-    <SpinnerComponent text={t("view.saving")} />
+    <SpinnerComponent text={t("view.txt-saving")} />
   {/if}
 </div>

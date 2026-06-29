@@ -40,17 +40,15 @@
 
     onSubmit(title.trim(), description.trim());
   }
-
-  // todo: localize
 </script>
 
 <div class="modal-content task-dialog">
-  <h2>Create new task</h2>
+  <h2>{t("view.head-create-new-task")}</h2>
 
   <!-- Context dropdown -->
   <div class="setting-item setting-item-custom">
     <div class="setting-item-info">
-      <label class="setting-item-name" for="context">{t("view.context")}</label>
+      <label class="setting-item-name" for="context">{t("view.lbl-context")}</label>
     </div>
 
     <div class="setting-item-control">
@@ -65,11 +63,11 @@
   <!-- Title textbox -->
   <div class="setting-item setting-item-custom">
     <div class="setting-item-info">
-      <label class="setting-item-name" for="title">{t("view.title")}</label>
+      <label class="setting-item-name" for="title">{t("view.lbl-title")}</label>
     </div>
 
     <div class="setting-item-control">
-      <input id="title" type="text" placeholder="Enter a short, descriptive title"
+      <input id="title" type="text" placeholder="{t("view.plh-title")}"
              bind:this={titleInput}
              bind:value={title}
              onkeydown="{handleKeyDown}" />
@@ -79,12 +77,12 @@
   <!-- Description textarea -->
   <div class="setting-item setting-item-custom">
     <div class="setting-item-info">
-      <label class="setting-item-name" for="description">{t("view.description")}</label>
-      <label class="setting-item-name" for="description">{t("view.optional")}</label>
+      <label class="setting-item-name" for="description">{t("view.lbl-description")}</label>
+      <label class="setting-item-name" for="description">{t("view.lbl-optional")}</label>
     </div>
 
     <div class="setting-item-control">
-        <textarea id="description" rows="5" placeholder="Provide additional information for this task"
+        <textarea id="description" rows="5" placeholder="{t("view.plh-description")}"
                   bind:value={description}
                   onkeydown="{handleKeyDown}"></textarea>
     </div>
@@ -96,7 +94,7 @@
     <div class="setting-item-control">
       <button type="button" class="btn-submit"
               disabled={title.trim().length === 0}
-              onclick="{handleSubmit}">Create task
+              onclick="{handleSubmit}">{t("view.btn-create-task")}
       </button>
     </div>
   </div>

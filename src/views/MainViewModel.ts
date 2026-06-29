@@ -24,7 +24,7 @@ export class MainViewModel extends ItemView {
   }
 
   getDisplayText() {
-    return t("view.dashboard");
+    return t("view.lbl-dashboard");
   }
 
   async onOpen() {
