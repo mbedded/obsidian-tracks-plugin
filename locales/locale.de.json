@@ -10,6 +10,8 @@
     "tracks-username-header": "Benutzername"
   },
   "messages": {
+    "no-contexts-existing-description": "Bitte erstellen Sie einen Kontext in Ihrem Dienst, damit dieses Plugin funktionieren kann.",
+    "no-contexts-existing-header": "Keine Kontexte vorhanden",
     "server-http-error": "Der Server gab einen Fehler zurück. Der HTTP Code ist {code}",
     "service-authentication-failed-description": "Die Authentifizierung ist fehlgeschlagen. Bitte überprüfen Sie Ihre Einstellungen und vergewissern Sie sich, dass der Benutzername und das Passwort korrekt sind.",
     "service-authentication-failed-header": "Authentifizierung fehlgeschlagen",
@@ -22,8 +24,9 @@
     "create-task": "Neue Aufgabe erstellen"
   },
   "view": {
-    "btn-delete-text": "Löschen",
     "btn-create-task": "Aufgabe erstellen",
+    "btn-delete-text": "Löschen",
+    "btn-reload": "Neu laden",
     "head-create-new-task": "Neue Aufgabe erstellen",
     "lbl-context": "Kontext",
     "lbl-dashboard": "Aufgabenübersicht",
@@ -33,8 +36,8 @@
     "lbl-optional": "(optional)",
     "lbl-title": "Titel",
     "plh-add-new-task": "Fügen Sie hier eine Aufgabe hinzu. Bestätigen Sie mit der RETURN-Taste...",
-    "plh-title": "Geben Sie einen kurzen, beschreibenden Titel ein",
     "plh-description": "Geben Sie zusätzliche Informationen zu dieser Aufgabe an",
+    "plh-title": "Geben Sie einen kurzen, beschreibenden Titel ein",
     "txt-no-tasks-existing": "Keine Aufgaben vorhanden",
     "txt-saving": "Wird gespeichert...",
     "txt-service": "Service"

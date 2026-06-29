@@ -61,6 +61,11 @@
 
     messenger.send("show_notice", t("notice.task-load-completed"));
   }
+
+  function invokeReload(): void {
+    messenger.send("reload", undefined);
+  }
+
 </script>
 
 <style>
@@ -78,21 +83,37 @@
     color: var(--text-muted);
     font-size: 0.7em;
   }
+
+  .reload-button {
+    align-self: flex-start;
+    width: fit-content;
+    margin-top: 1em;
+  }
 </style>
 
 <div class="container">
+  <!-- Loading spinner -->
   {#if loading}
     <SpinnerComponent text={t("view.lbl-loading-contexts")} />
   {/if}
 
+  <!-- Error handling -->
   {#if hasError}
     <ErrorComponent header={errorHeader} message={errorMessage} />
-    <!-- todo: add reload button so user can press button instead of close/open tab -->
+    <button type="button" class="mod-cta reload-button" onclick={invokeReload}>
+      {t("view.btn-reload")}
+    </button>
   {/if}
 
+  <!-- Entries after loading -->
   {#if !loading && !hasError}
-    <!-- todo: show hint  when context == empty-->
-    <!-- todo: add reload button when user adds context via web UI-->
+    {#if contexts.length === 0}
+      <ErrorComponent header={t("messages.no-contexts-existing-header")}
+                      message={t("messages.no-contexts-existing-description")} />
+      <button type="button" class="mod-cta reload-button" onclick={invokeReload}>
+        {t("view.btn-reload")}
+      </button>
+    {/if}
 
     {#each contexts as context}
       <ContextComponent adapter={adapter} context={context} />

@@ -10,6 +10,8 @@
     "tracks-username-header": "Username"
   },
   "messages": {
+    "no-contexts-existing-description": "Please create a context in your service so this plugin can work.",
+    "no-contexts-existing-header": "No contexts existing",
     "server-http-error": "The server returned an error. HTTP code is {code}",
     "service-authentication-failed-description": "Unable to authenticate. Please check your settings and verify that the username and password are correct.",
     "service-authentication-failed-header": "Authentication failed",
@@ -22,8 +24,9 @@
     "create-task": "Create new task"
   },
   "view": {
-    "btn-delete-text": "Delete",
     "btn-create-task": "Create task",
+    "btn-delete-text": "Delete",
+    "btn-reload": "Reload",
     "head-create-new-task": "Create new task",
     "lbl-context": "Context",
     "lbl-dashboard": "Task Dashboard",
@@ -33,8 +36,8 @@
     "lbl-optional": "(optional)",
     "lbl-title": "Title",
     "plh-add-new-task": "Add a task here. Confirm by pressing RETURN...",
-    "plh-title": "Enter a short, descriptive title",
     "plh-description": "Provide additional information for this task",
+    "plh-title": "Enter a short, descriptive title",
     "txt-no-tasks-existing": "No tasks existing",
     "txt-saving": "Saving...",
     "txt-service": "Service"
