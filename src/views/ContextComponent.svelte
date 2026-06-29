@@ -23,7 +23,7 @@
   let isLoading = $state(false);
   let isSaving = $state(false);
   let tasks: TaskItem[] = $state([]);
-  let newTaskText = $state("");
+  let newTaskTitle = $state("");
 
   onMount(() => {
     messenger.on("task_created", handleTaskCreated);
@@ -62,17 +62,17 @@
       return;
     }
 
-    if (!newTaskText.trim()) {
+    if (!newTaskTitle.trim()) {
       return;
     }
 
     isSaving = true;
     try {
-      let newTask = await adapter.createTask(context.id, newTaskText);
+      let newTask = await adapter.createTask(context.id, newTaskTitle, "");
 
       if (newTask) {
         tasks = [...tasks, newTask];
-        newTaskText = "";
+        newTaskTitle = "";
       }
     } finally {
       isSaving = false;
@@ -136,7 +136,7 @@
 
   <input class="txt-new-task"
          type="text"
-         bind:value={newTaskText}
+         bind:value={newTaskTitle}
          onkeydown={onTxtNewTaskKeyDown}
          placeholder={t("view.plh-add-new-task")}
          readonly={isSaving} />
