@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount, tick } from "svelte";
   import type { ContextItem } from "../adapters/TaskClasses";
+  import { t } from "../localizer/Localizer";
 
   interface Props {
     contexts: ContextItem[];
@@ -49,7 +50,7 @@
   <!-- Context dropdown -->
   <div class="setting-item setting-item-custom">
     <div class="setting-item-info">
-      <label class="setting-item-name" for="context">Context</label>
+      <label class="setting-item-name" for="context">{t("view.context")}</label>
     </div>
 
     <div class="setting-item-control">
@@ -64,29 +65,28 @@
   <!-- Title textbox -->
   <div class="setting-item setting-item-custom">
     <div class="setting-item-info">
-      <label class="setting-item-name" for="title">Title</label>
+      <label class="setting-item-name" for="title">{t("view.title")}</label>
     </div>
 
     <div class="setting-item-control">
       <input id="title" type="text" placeholder="Enter a short, descriptive title"
              bind:this={titleInput}
              bind:value={title}
-             onkeydown="{handleKeyDown}"
-      />
+             onkeydown="{handleKeyDown}" />
     </div>
   </div>
 
   <!-- Description textarea -->
   <div class="setting-item setting-item-custom">
     <div class="setting-item-info">
-      <label class="setting-item-name" for="description">Description</label>
+      <label class="setting-item-name" for="description">{t("view.description")}</label>
+      <label class="setting-item-name" for="description">{t("view.optional")}</label>
     </div>
 
     <div class="setting-item-control">
         <textarea id="description" rows="5" placeholder="Provide additional information for this task"
                   bind:value={description}
-                  onkeydown="{handleKeyDown}"
-        ></textarea>
+                  onkeydown="{handleKeyDown}"></textarea>
     </div>
   </div>
 

@@ -24,7 +24,7 @@ export class MainViewModel extends ItemView {
   }
 
   getDisplayText() {
-    return t("view.title");
+    return t("view.dashboard");
   }
 
   async onOpen() {

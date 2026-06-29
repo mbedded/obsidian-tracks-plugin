@@ -23,12 +23,16 @@
   },
   "view": {
     "btn-delete-text": "Delete",
-    "lbl-service": "Service",
+    "context": "Context",
+    "dashboard": "Task Dashboard",
+    "description": "Description",
     "loading-contexts": "Loading contexts...",
     "loading-tasks": "Loading tasks...",
     "no-tasks-existing": "No tasks existing",
+    "optional": "(optional)",
     "saving": "Saving...",
-    "title": "Task Dashboard",
+    "service": "Service",
+    "title": "Title",
     "txt-add-new-task": "Add a task here. Confirm by pressing RETURN..."
   },
   "notice": {

@@ -101,7 +101,7 @@
 
   <!-- General information for the user at the bottom of the view -->
   <div class="placeholder">
-    <p>{t("view.lbl-service")}: {adapter.getDisplayInfo()}</p>
+    <p>{t("view.service")}: {adapter.getDisplayInfo()}</p>
   </div>
 </div>
 

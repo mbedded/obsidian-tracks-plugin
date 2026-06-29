@@ -23,12 +23,16 @@
   },
   "view": {
     "btn-delete-text": "Löschen",
-    "lbl-service": "Service",
+    "context": "Kontext",
+    "dashboard": "Aufgabenübersicht",
+    "description": "Beschreibung",
     "loading-contexts": "Kontexte werden geladen...",
     "loading-tasks": "Aufgaben werden geladen...",
     "no-tasks-existing": "Keine Aufgaben vorhanden",
+    "optional": "(optional)",
     "saving": "Wird gespeichert...",
-    "title": "Aufgabenübersicht",
+    "service": "Service",
+    "title": "Titel",
     "txt-add-new-task": "Fügen Sie hier eine Aufgabe hinzu. Bestätigen Sie mit der RETURN-Taste..."
   },
   "notice": {
