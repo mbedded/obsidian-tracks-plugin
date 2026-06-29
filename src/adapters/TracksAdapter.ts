@@ -149,11 +149,12 @@ export class TracksAdapter implements ITaskAdapter {
     return true;
   }
 
-  public async createTask(contextId: number, text: string): Promise<TaskItem> {
+  public async createTask(contextId: number, title: string, description: string): Promise<TaskItem> {
     try {
       const xmlBody = `<todo>
-    <description>${text}</description>
+    <description>${title}</description>
     <context-id>${contextId}</context-id>
+    <notes>${description}</notes>
   </todo>`;
 
       const response = await this.doRequest({
@@ -170,7 +171,7 @@ export class TracksAdapter implements ITaskAdapter {
       const parts = location.split("/");
       const newId = parseInt(parts[parts.length - 1], 10);
 
-      return new TaskItem(newId, text);
+      return new TaskItem(newId, title);
     } catch (e) {
       // todo: handle error
       console.error("error creating task: " + e);

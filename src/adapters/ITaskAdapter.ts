@@ -45,10 +45,11 @@ export interface ITaskAdapter {
    * Creates a new task using the specified context.
    *
    * @param {number} contextId - The ID of the context to add the task to.
-   * @param {string} text - The text/content of the new task.
+   * @param {string} title - The title/content of the new task.
+   * @param {string} description - Additional notes/text of the new task..
    * @return {Promise<TaskItem>} A promise that resolves to the newly created TaskItem.
    */
-  createTask(contextId: number, text: string): Promise<TaskItem>
+  createTask(contextId: number, title: string, description: string): Promise<TaskItem>
 
   /**
    * Deletes a specific task.

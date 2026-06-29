@@ -33,7 +33,7 @@
   }
 
   async function onDoubleClickDescription() {
-    console.log("edit task " + task.description)
+    console.log("edit task " + task.title)
   }
 </script>
 
@@ -111,7 +111,7 @@
       <div class="spinner"></div>
     {/if}
   </button>
-  <span class="description">{task.description}</span>
+  <span class="description">{task.title}</span>
   <button type="button" class="btn-delete" onclick={onClickDelete}>
     {#if !isDeleteRunning}
       {t("view.btn-delete-text")}

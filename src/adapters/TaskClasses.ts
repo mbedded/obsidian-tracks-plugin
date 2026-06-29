@@ -1,11 +1,11 @@
 // This file contains the data-classes to interact with any service.
 export class TaskItem {
   public readonly id: number;
-  public readonly description: string;
+  public readonly title: string;
 
-  constructor(id: number, description: string) {
+  constructor(id: number, title: string) {
     this.id = id;
-    this.description = description;
+    this.title = title;
   }
 }
 

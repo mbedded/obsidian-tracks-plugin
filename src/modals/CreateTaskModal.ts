@@ -48,8 +48,7 @@ export class CreateTaskModal extends Modal {
       return;
     }
 
-    // todo: take and save description
-    const task = await this.adapter.createTask(contextId, title);
+    const task = await this.adapter.createTask(contextId, title, description);
     this.messenger.send("task_created", {taskId: task.id, contextId: contextId, title: title});
     this.close();
   }
