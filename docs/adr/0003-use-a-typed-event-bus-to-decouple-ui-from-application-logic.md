@@ -1,4 +1,4 @@
-# 3. use a typed event bus to decouple UI from application logic
+# 3. Use a typed event bus to decouple UI from application logic
 
 Date: 2026-05-02
 
