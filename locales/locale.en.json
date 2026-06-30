@@ -44,7 +44,9 @@
   },
   "notice": {
     "command-reload": "Reloading tasks...",
+    "no-contexts-available": "No contexts available. Please create a context first or check if the server is reachable.",
     "prefix-error": "Error",
-    "task-load-completed": "Finished loading tasks."
+    "task-load-completed": "Finished loading tasks.",
+    "title-is-required": "Title is required."
   }
 }
