@@ -1,6 +1,7 @@
 <script lang="ts">
   import { TaskItem } from "../adapters/TaskClasses";
   import { t } from "../localizer/Localizer";
+  import { SimpleMessenger } from "../messenger/SimpleMessenger";
 
   interface Props {
     // The entry to display and interact with.
@@ -17,6 +18,7 @@
     deleteTask
   }: Props = $props();
 
+  const messenger = SimpleMessenger.getInstance();
   let isDoneRunning = $state(false);
   let isDeleteRunning = $state(false);
 
@@ -33,7 +35,7 @@
   }
 
   async function onDoubleClickDescription() {
-    console.log("edit task " + task.title)
+    messenger.send("update_task", task)
   }
 </script>
 
@@ -111,7 +113,16 @@
       <div class="spinner"></div>
     {/if}
   </button>
-  <span class="description">{task.title}</span>
+
+  <!-- Span/textbox to show or edit the description -->
+  <!-- todo: open dialog to edit the task "ondblclick" -->
+  <span role="button" aria-label={t("view.aria-edit-task-description")}
+        tabindex="0"
+        class="description" ondblclick="{onDoubleClickDescription}">
+    {task.title}
+  </span>
+
+  <!-- Delete button right side -->
   <button type="button" class="btn-delete" onclick={onClickDelete}>
     {#if !isDeleteRunning}
       {t("view.btn-delete-text")}

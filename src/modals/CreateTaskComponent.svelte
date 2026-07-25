@@ -2,6 +2,7 @@
   import { onMount, tick } from "svelte";
   import type { ContextItem } from "../adapters/TaskClasses";
   import { t } from "../localizer/Localizer";
+  import { Helpers } from "../utils/Helpers";
 
   interface Props {
     contexts: ContextItem[];
@@ -21,7 +22,7 @@
   let titleInput: HTMLInputElement;
 
   function handleKeyDown(event: KeyboardEvent) {
-    if (event.key === "Enter" && event.ctrlKey) {
+    if (event.ctrlKey && event.key === "Enter") {
       event.preventDefault();
       handleSubmit();
     }
@@ -93,7 +94,7 @@
 
     <div class="setting-item-control">
       <button type="button" class="btn-submit"
-              disabled={title.trim().length === 0}
+              disabled={Helpers.isTitleEmpty(title)}
               onclick="{handleSubmit}">{t("view.btn-create-task")}
       </button>
     </div>
