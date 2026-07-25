@@ -94,7 +94,7 @@ export class TracksAdapter implements ITaskAdapter {
 
     return contexts
       .filter((x) => x.state === "active")
-      .map((x) => new ContextItem(x["id"], x["name"]))
+      .map((x) => new ContextItem(x["id"], String(x["name"])))
       .sort((a, b) => a.name.localeCompare(b.name));
   }
 
@@ -127,7 +127,7 @@ export class TracksAdapter implements ITaskAdapter {
       tasks = [tasks];
     }
 
-    return tasks.map((x) => new TaskItem(x["id"], x["description"], x["context-id"]));
+    return tasks.map((x) => new TaskItem(x["id"], String(x["description"]), x["context-id"]));
   }
 
   public async toggleTaskState(taskId: number): Promise<boolean> {
@@ -195,4 +195,29 @@ export class TracksAdapter implements ITaskAdapter {
     }
   }
 
+  public async updateTask(taskId: number, title: string, description: string, contextId: number): Promise<TaskItem>{
+    try {
+      const xmlBody = `<todo>
+    <description>${title}</description>
+    <context-id>${contextId}</context-id>
+    <notes>${description}</notes>
+  </todo>`;
+
+      await this.doRequest({
+        url: `${this.baseUrl}/todos/${taskId}.xml`,
+        method: "PUT",
+        body: xmlBody,
+        headers: {
+          "Authorization": `Basic ${this.basicToken}`,
+          "Content-Type": "text/xml"
+        }
+      });
+
+      return new TaskItem(taskId, title, contextId);
+    } catch (e) {
+      // todo: handle error
+      console.error("error updating task: " + e);
+      throw e;
+    }
+  }
 }
