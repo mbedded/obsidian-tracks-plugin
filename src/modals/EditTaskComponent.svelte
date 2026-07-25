@@ -1,25 +1,32 @@
+<!--
+  Note: This component is based on CreateTaskComponent and was adapted to handle the "edit" use case.
+  Keeping "create" and "edit" as separate components avoids the complexity of managing
+  two distinct states (new vs. edit) within a single component.
+  Trade-off: Since the components are based on the same "Task" any change to the model
+  or its features may require updates in multiple places. Keep them in sync when modifying.
+-->
 <script lang="ts">
   import { onMount, tick } from "svelte";
-  import type { ContextItem } from "../adapters/TaskClasses";
+  import { type ContextItem, TaskItem } from "../adapters/TaskClasses";
   import { t } from "../localizer/Localizer";
   import { Helpers } from "../utils/Helpers";
 
   interface Props {
     contexts: ContextItem[];
-    onSubmit: (title: string, description: string, contextId: number) => Promise<void>;
+    task: TaskItem;
+    onSubmit: (updatedTask: TaskItem) => Promise<void>;
   }
 
   let {
     contexts,
+    task,
     onSubmit
   }: Props = $props();
 
-  const CONTEXT_ID_UNDEFINED = -1;
-  let title = $state("");
-  let description = $state("");
-  let selectedContextId = $state(0);
-
   let titleInput: HTMLInputElement;
+  // svelte-ignore state_referenced_locally
+  // This is intentional. The initial state should be displayed. The user drives subsequent updates.
+  let editedTask = $state({...task});
 
   function handleKeyDown(event: KeyboardEvent) {
     if (event.ctrlKey && event.key === "Enter") {
@@ -30,21 +37,22 @@
 
   onMount(async () => {
     await tick();
-    selectedContextId = contexts[0]?.id ?? CONTEXT_ID_UNDEFINED;
-    titleInput.focus();
+    titleInput.select();
+    // titleInput.focus();
   });
 
   function handleSubmit() {
-    if (title.trim().length === 0) {
+    editedTask.title = editedTask.title.trim();
+    if (editedTask.title.length === 0) {
       return;
     }
 
-    onSubmit(title.trim(), description.trim(), selectedContextId);
+    onSubmit(editedTask);
   }
 </script>
 
 <div class="modal-content task-dialog">
-  <h2>{t("view.head-create-new-task")}</h2>
+  <h2>{t("view.head-edit-task")}</h2>
 
   <!-- Context dropdown -->
   <div class="setting-item setting-item-custom">
@@ -53,7 +61,7 @@
     </div>
 
     <div class="setting-item-control">
-      <select id="context" bind:value={selectedContextId} class="dropdown">
+      <select id="context" bind:value={editedTask.contextId} class="dropdown">
         {#each contexts as context}
           <option value={context.id}>{context.name}</option>
         {/each}
@@ -70,7 +78,7 @@
     <div class="setting-item-control">
       <input id="title" type="text" placeholder="{t("view.plh-title")}"
              bind:this={titleInput}
-             bind:value={title}
+             bind:value={editedTask.title}
              onkeydown="{handleKeyDown}" />
     </div>
   </div>
@@ -83,8 +91,9 @@
     </div>
 
     <div class="setting-item-control">
+      <!-- todo: add description -->
+      <!--                  bind:value={editedTask.description}-->
         <textarea id="description" rows="5" placeholder="{t("view.plh-description")}"
-                  bind:value={description}
                   onkeydown="{handleKeyDown}"></textarea>
     </div>
   </div>
@@ -94,8 +103,8 @@
 
     <div class="setting-item-control">
       <button type="button" class="btn-submit"
-              disabled={Helpers.isTitleEmpty(title)}
-              onclick="{handleSubmit}">{t("view.btn-create-task")}
+              disabled={Helpers.isTitleEmpty(editedTask?.title)}
+              onclick="{handleSubmit}">{t("view.btn-save-changes")}
       </button>
     </div>
   </div>

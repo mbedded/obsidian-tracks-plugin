@@ -7,11 +7,11 @@
 GET {{baseUrl}}/contexts.xml
 Authorization: Basic {{username}} {{password}}
 
-### Get todos for context
+### Get tasks for context
 GET {{baseUrl}}/contexts/1/todos.xml
 Authorization: Basic {{username}} {{password}}
 
-### Get active todos for context
+### Get active tasks for context
 GET {{baseUrl}}/contexts/1/todos.xml?limit_to_active_todos=1
 Authorization: Basic {{username}} {{password}}
 
@@ -30,23 +30,23 @@ Authorization: Basic {{username}} {{password}}
 
 
 
-### Get all todos
+### Get all tasks
 GET {{baseUrl}}/todos.xml
 Authorization: Basic {{username}} {{password}}
 
-### Get active todos
+### Get active tasks
 GET {{baseUrl}}/todos.xml?limit_to_active_todos=1
 Authorization: Basic {{username}} {{password}}
 
-### Get one todo
+### Get one task
 GET {{baseUrl}}/todos/1.xml
 Authorization: Basic {{username}} {{password}}
 
-### Toggle todo
+### Toggle task
 PUT {{baseUrl}}/todos/1/toggle_check.xml
 Authorization: Basic {{username}} {{password}}
 
-### Create todo
+### Create task
 POST {{baseUrl}}/todos.xml
 Authorization: Basic {{username}} {{password}}
 Content-Type: text/xml
@@ -58,6 +58,17 @@ Content-Type: text/xml
 line 2 text</notes>
 </todo>
 
-### Delete todo
+### Delete task
 DELETE {{baseUrl}}/todos/1.xml
 Authorization: Basic {{username}} {{password}}
+
+### Update task
+PUT {{baseUrl}}/todos/1.xml
+Authorization: Basic {{username}} {{password}}
+Content-Type: text/xml
+
+<todo>
+  <description>Updated description</description>
+  <context-id>1</context-id>
+  <notes>Updated notes</notes>
+</todo>

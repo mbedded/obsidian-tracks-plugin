@@ -1,3 +1,5 @@
+import type { TaskItem } from "../adapters/TaskClasses";
+
 /**
  * Represents a mapping of event names to their associated data types.
  *
@@ -9,13 +11,23 @@ export type EventMap = {
   reload: void;
   show_notice: string;
   show_notice_error: string;
-  task_created: TaskCreatedEvent;
+  task_created: TaskCreatedEventArgs;
+  update_task: TaskItem;
+  task_updated: TaskUpdatedEventArgs;
 };
 
-export type TaskCreatedEvent = {
+export type TaskCreatedEventArgs = {
   taskId: number;
   contextId: number;
-  title: string
+  title: string;
+  // todo: add description
+};
+
+export type TaskUpdatedEventArgs = {
+  taskId: number;
+  contextId: number;
+  title: string;
+  // todo: add description
 };
 
 /**

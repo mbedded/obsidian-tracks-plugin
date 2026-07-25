@@ -1,8 +1,9 @@
 import { type App, Modal } from "obsidian";
-import CreateTaskComponent from "./CreateTaskComponent.svelte";
 import { mount, unmount } from "svelte";
+import CreateTaskComponent from "./CreateTaskComponent.svelte";
 import type { ITaskAdapter } from "../adapters/ITaskAdapter";
 import { SimpleMessenger } from "../messenger/SimpleMessenger";
+import { t } from "../localizer/Localizer";
 
 export class CreateTaskModal extends Modal {
   private view: ReturnType<typeof CreateTaskComponent> | null = null;
@@ -21,7 +22,7 @@ export class CreateTaskModal extends Modal {
     const contexts = await this.adapter.getActiveContexts();
 
     if (contexts.length === 0) {
-      this.messenger.send("show_notice_error", "No contexts available. Please create a context first or check if the server is reachable.");
+      this.messenger.send("show_notice_error", t("notice.no-contexts-available"));
       this.close();
       return;
     }
@@ -36,7 +37,6 @@ export class CreateTaskModal extends Modal {
   }
 
   async onClose() {
-    console.log("!!Adapter:", !!this.adapter);
     if (this.view) {
       await unmount(this.view);
     }
@@ -44,7 +44,7 @@ export class CreateTaskModal extends Modal {
 
   private async onSubmit(title: string, description: string, contextId: number) {
     if (!title) {
-      this.messenger.send("show_notice_error", "Title is required.");
+      this.messenger.send("show_notice_error", t("notice.title-is-required"));
       return;
     }
 

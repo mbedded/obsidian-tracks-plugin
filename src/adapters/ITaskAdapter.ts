@@ -7,7 +7,7 @@ import { ContextItem, PingResult, TaskItem } from "./TaskClasses";
 export interface ITaskAdapter {
 
   /**
-   * Returns a human-readable name for the adapter.
+   * @return A human-readable name for the adapter.
    */
   getDisplayInfo(): string;
 
@@ -45,7 +45,7 @@ export interface ITaskAdapter {
    * Creates a new task using the specified context.
    *
    * @param {number} contextId - The ID of the context to add the task to.
-   * @param {string} title - The title/content of the new task.
+   * @param {string} title - The title of the new task.
    * @param {string} description - Additional notes/text of the new task..
    * @return {Promise<TaskItem>} A promise that resolves to the newly created TaskItem.
    */
@@ -59,4 +59,14 @@ export interface ITaskAdapter {
    */
   deleteTask(taskId: number): Promise<boolean>
 
+  /**
+   * Updates a specific task.
+   *
+   * @param {number} taskId - The unique identifier of the task to update.
+   * @param {string} title - The new title of the task.
+   * @param {string} description - New notes/text of the task.
+   * @param {number} contextId - New ID of the context to add the task to.
+   * @return {Promise<TaskItem>} A promise that resolves to the updated TaskItem.
+   */
+  updateTask(taskId: number, title: string, description: string, contextId: number): Promise<TaskItem>;
 }

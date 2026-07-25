@@ -6,7 +6,7 @@
   import TaskComponent from "./TaskComponent.svelte";
   import { t } from "../localizer/Localizer";
   import { SimpleMessenger } from "../messenger/SimpleMessenger";
-  import type { TaskCreatedEvent } from "../messenger/IMessenger";
+  import type { TaskCreatedEventArgs, TaskUpdatedEventArgs } from "../messenger/IMessenger";
 
   interface Props {
     adapter: ITaskAdapter;
@@ -27,11 +27,13 @@
 
   onMount(() => {
     messenger.on("task_created", handleTaskCreated);
+    messenger.on("task_updated", handleTaskUpdated);
 
     void initialize();
 
     return () => {
       messenger.unregister("task_created", handleTaskCreated);
+      messenger.unregister("task_updated", handleTaskUpdated);
     };
   });
 
@@ -79,12 +81,35 @@
     }
   }
 
-  function handleTaskCreated(event: TaskCreatedEvent) {
+  function handleTaskCreated(event: TaskCreatedEventArgs) {
     if (context.id != event.contextId) {
       return;
     }
 
-    tasks.push(new TaskItem(event.taskId, event.title));
+    tasks.push(new TaskItem(event.taskId, event.title, event.contextId));
+  }
+
+  function handleTaskUpdated(args: TaskUpdatedEventArgs) {
+    // Check if this is an existing task
+    let task = tasks.find(x=> x.id === args.taskId);
+
+    if (!!task) {
+      // Task exists, so we must update the properties or delete it.
+      if (context.id == args.contextId) {
+        // Update properties. We must use "map" to trigger an update of the UI.
+        // todo: handle description
+        tasks = tasks.map(x => x.id === args.taskId ? new TaskItem(x.id, args.title, x.contextId) : x);
+      } else{
+        // Context has changed, remove the task
+        tasks.remove(task);
+      }
+    } else{
+      // Task doesn't exist. So we may need to create a new one
+      if (context.id == args.contextId) {
+        console.log("task pushed");
+        tasks.push(new TaskItem(args.taskId, args.title, args.contextId));
+      }
+    }
   }
 </script>
 
@@ -127,7 +152,7 @@
     {#each tasks as task (task.id)}
       <TaskComponent task={task}
                      markTaskAsDone={markTaskAsDone}
-                     deleteTask={deleteTask} />
+                     deleteTask={deleteTask}/>
     {/each}
 
   {:else}

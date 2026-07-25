@@ -27,7 +27,9 @@
     "btn-create-task": "Aufgabe erstellen",
     "btn-delete-text": "Löschen",
     "btn-reload": "Neu laden",
+    "btn-save-changes": "Änderungen speichern",
     "head-create-new-task": "Neue Aufgabe erstellen",
+    "head-edit-task": "Aufgabe bearbeiten",
     "lbl-context": "Kontext",
     "lbl-dashboard": "Aufgabenübersicht",
     "lbl-description": "Beschreibung",
@@ -44,7 +46,9 @@
   },
   "notice": {
     "command-reload": "Aufgaben werden neu geladen...",
+    "no-contexts-available": "Keine Kontexte verfügbar. Bitte erstellen Sie zuerst einen Kontext und prüfen Sie, ob der Server erreichbar ist.",
     "prefix-error": "Fehler",
-    "task-load-completed": "Laden der Aufgaben abgeschlossen."
+    "task-load-completed": "Laden der Aufgaben abgeschlossen.",
+    "title-is-required": "Der Titel ist erforderlich."
   }
 }

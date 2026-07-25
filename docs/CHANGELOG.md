@@ -11,9 +11,13 @@ It serves as a reference for tracking version history and release details.
 
 #### Features
 
-- Add command: "Reload" to reload all contexts and tasks which refresh the dashboard.
-- Add command: "Create new task" to create a new task via command line and dialog.
 - Add "reload" button when the dashboard shows an error message.
+- Add feature "edit task". The edit dialog is opened via double-click on a given task.
+- Add command: "Reload" to reload all contexts and tasks. This refreshes the dashboard.
+- Add command: "Create new task" to create a new task via command line and dialog.
+
+#### Other
+
 - Improve error messages when service is not available or when no contexts exist.
 
 ### [1.0.1](https://github.com/mbedded/obsidian-web-task-dashboard/releases/tag/1.0.1)

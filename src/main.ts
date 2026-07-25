@@ -8,6 +8,8 @@ import { t } from "./localizer/Localizer";
 import { SimpleMessenger } from "./messenger/SimpleMessenger";
 import { CreateTaskModal } from "./modals/CreateTaskModal";
 import type { ITaskAdapter } from "./adapters/ITaskAdapter";
+import { Helpers } from "./utils/Helpers";
+import { EditTaskModal } from "./modals/EditTaskModal";
 
 export default class TracksPlugin extends Plugin {
   private static readonly DEFAULT_NOTICE_TIME: number = 3000;
@@ -33,6 +35,13 @@ export default class TracksPlugin extends Plugin {
     this.messenger.on("show_notice_error", message => {
         message = `${t("notice.prefix-error")}: ${message}`;
         this.showNotice(message, TracksPlugin.ERROR_NOTICE_TIME);
+      }
+    )
+
+    this.messenger.on("update_task", task => {
+        const clone = Helpers.clone(task);
+        const adapter = this.getAdapter();
+        new EditTaskModal(this.app, adapter, clone).open();
       }
     )
   }
