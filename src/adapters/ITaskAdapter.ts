@@ -63,10 +63,10 @@ export interface ITaskAdapter {
    * Updates a specific task.
    *
    * @param {number} taskId - The unique identifier of the task to update.
+   @param {number} contextId - New ID of the context to add the task to.
    * @param {string} title - The new title of the task.
    * @param {string} description - New notes/text of the task.
-   * @param {number} contextId - New ID of the context to add the task to.
    * @return {Promise<TaskItem>} A promise that resolves to the updated TaskItem.
    */
-  updateTask(taskId: number, title: string, description: string, contextId: number): Promise<TaskItem>;
+  updateTask(taskId: number, contextId: number, title: string, description: string): Promise<TaskItem>;
 }

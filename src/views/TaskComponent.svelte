@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { setIcon } from "obsidian";
   import { TaskItem } from "../adapters/TaskClasses";
   import { t } from "../localizer/Localizer";
   import { SimpleMessenger } from "../messenger/SimpleMessenger";
@@ -21,6 +23,12 @@
   const messenger = SimpleMessenger.getInstance();
   let isDoneRunning = $state(false);
   let isDeleteRunning = $state(false);
+  let isExpanded = $state(false);
+  let descriptionIon: HTMLSpanElement;
+
+  onMount(() => {
+    setIcon(descriptionIon, "message-square-text");
+  });
 
   async function onClickDone() {
     isDoneRunning = true;
@@ -37,12 +45,18 @@
   async function onDoubleClickDescription() {
     messenger.send("update_task", task)
   }
+
+  function onClickDescription(event: MouseEvent) {
+    if (event.button !== 0) {
+      return;
+    }
+
+    isExpanded = !isExpanded;
+  }
 </script>
 
 <style>
   .container {
-    display: flex;
-    align-items: center;
     margin-bottom: 5px;
     position: relative;
 
@@ -53,6 +67,12 @@
         opacity: 1;
       }
     }
+  }
+
+  .task-row {
+    display: flex;
+    align-items: center;
+    position: relative;
   }
 
   .btn-done {
@@ -84,6 +104,19 @@
     margin-right: 10px;
   }
 
+  .task-description {
+    margin-top: 5px;
+    margin-left: 30px;
+    color: var(--text-muted);
+    white-space: pre-wrap;
+  }
+
+  .description-icon {
+    display: inline-flex;
+    margin-left: 4px;
+    vertical-align: center;
+  }
+
   .spinner {
     display: inline-block;
     width: 14px;
@@ -105,30 +138,38 @@
 </style>
 
 <div class="container">
-  <!-- Button to mark task as "done" -->
-  <button type="button" class="btn-done" onclick={onClickDone}>
-    {#if !isDoneRunning}
-      ✓
-    {:else}
-      <div class="spinner"></div>
-    {/if}
-  </button>
+  <div class="task-row">
+    <!-- Button to mark task as "done" -->
+    <button type="button" class="btn-done" onclick={onClickDone}>
+      {#if !isDoneRunning}
+        ✓
+      {:else}
+        <div class="spinner"></div>
+      {/if}
+    </button>
 
-  <!-- Span/textbox to show or edit the description -->
-  <!-- todo: open dialog to edit the task "ondblclick" -->
-  <span role="button" aria-label={t("view.aria-edit-task-description")}
-        tabindex="0"
-        class="description" ondblclick="{onDoubleClickDescription}">
-    {task.title}
-  </span>
+    <!-- Span/textbox to show or edit the description -->
+    <span role="button"
+          tabindex="0" class="description"
+          ondblclick={onDoubleClickDescription}>
+      {task.title}
+      <span bind:this={descriptionIon}
+            onclick={onClickDescription}
+            style:display={!!task.description ? null : "none"}
+            class="description-icon"></span>
+    </span>
 
-  <!-- Delete button right side -->
-  <button type="button" class="btn-delete" onclick={onClickDelete}>
-    {#if !isDeleteRunning}
-      {t("view.btn-delete-text")}
-    {:else}
-      <div class="spinner"></div>
-    {/if}
-  </button>
+    <!-- Delete button right side -->
+    <button type="button" class="btn-delete" onclick={onClickDelete}>
+      {#if !isDeleteRunning}
+        {t("view.btn-delete-text")}
+      {:else}
+        <div class="spinner"></div>
+      {/if}
+    </button>
+  </div>
+
+  {#if isExpanded && task.description}
+    <div class="task-description">{task.description}</div>
+  {/if}
 </div>
-

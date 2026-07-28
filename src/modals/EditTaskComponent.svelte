@@ -47,6 +47,12 @@
       return;
     }
 
+    if (!!editedTask.description) {
+      editedTask.description = editedTask.description.trim();
+    } else {
+      editedTask.description = "";
+    }
+
     onSubmit(editedTask);
   }
 </script>
@@ -91,10 +97,9 @@
     </div>
 
     <div class="setting-item-control">
-      <!-- todo: add description -->
-      <!--                  bind:value={editedTask.description}-->
-        <textarea id="description" rows="5" placeholder="{t("view.plh-description")}"
-                  onkeydown="{handleKeyDown}"></textarea>
+      <textarea id="description" rows="5" placeholder="{t("view.plh-description")}"
+                bind:value={editedTask.description}
+                onkeydown="{handleKeyDown}"></textarea>
     </div>
   </div>
 

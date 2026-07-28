@@ -46,12 +46,11 @@ export class EditTaskModal extends Modal {
       return;
     }
 
-    // todo: handle description
-    const task = await this.adapter.updateTask(editedTask.id, editedTask.title, "", editedTask.contextId);
+    const task = await this.adapter.updateTask(editedTask.id, editedTask.contextId, editedTask.title, editedTask.description);
 
     // const task = await this.adapter.createTask(contextId, title, description);
     // todo: update views. check contextId to add/remove task to the matching context
-    const args: TaskUpdatedEventArgs = {taskId: task.id, title: task.title, contextId: task.contextId};
+    const args: TaskUpdatedEventArgs = {taskId: task.id, contextId: task.contextId, title: task.title, description: task.description};
     this.messenger.send("task_updated", args);
     this.close();
   }
