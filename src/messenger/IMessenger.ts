@@ -20,14 +20,14 @@ export type TaskCreatedEventArgs = {
   taskId: number;
   contextId: number;
   title: string;
-  // todo: add description
+  description: string;
 };
 
 export type TaskUpdatedEventArgs = {
   taskId: number;
   contextId: number;
   title: string;
-  // todo: add description
+  description: string;
 };
 
 /**

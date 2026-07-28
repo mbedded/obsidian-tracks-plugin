@@ -24,6 +24,8 @@
     "create-task": "Create new task"
   },
   "view": {
+    "aria-lbl-expand-description": "Expand description",
+    "aria-lbl-collapse-description": "Collapse description",
     "btn-create-task": "Create task",
     "btn-delete-text": "Delete",
     "btn-reload": "Reload",

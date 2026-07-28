@@ -49,7 +49,7 @@ export class CreateTaskModal extends Modal {
     }
 
     const task = await this.adapter.createTask(contextId, title, description);
-    this.messenger.send("task_created", {taskId: task.id, contextId: contextId, title: title});
+    this.messenger.send("task_created", {taskId: task.id, contextId: contextId, title: title, description: description});
     this.close();
   }
 }

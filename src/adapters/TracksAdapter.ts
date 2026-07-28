@@ -127,7 +127,7 @@ export class TracksAdapter implements ITaskAdapter {
       tasks = [tasks];
     }
 
-    return tasks.map((x) => new TaskItem(x["id"], String(x["description"]), x["context-id"]));
+    return tasks.map((x) => new TaskItem(x["id"], x["context-id"], String(x["description"]), String(x["notes"])));
   }
 
   public async toggleTaskState(taskId: number): Promise<boolean> {
@@ -171,7 +171,7 @@ export class TracksAdapter implements ITaskAdapter {
       const parts = location.split("/");
       const newId = parseInt(parts[parts.length - 1], 10);
 
-      return new TaskItem(newId, title, contextId);
+      return new TaskItem(newId, contextId, title, description);
     } catch (e) {
       // todo: handle error
       console.error("error creating task: " + e);
@@ -195,7 +195,7 @@ export class TracksAdapter implements ITaskAdapter {
     }
   }
 
-  public async updateTask(taskId: number, title: string, description: string, contextId: number): Promise<TaskItem>{
+  public async updateTask(taskId: number, contextId: number, title: string, description: string): Promise<TaskItem>{
     try {
       const xmlBody = `<todo>
     <description>${title}</description>
@@ -213,7 +213,7 @@ export class TracksAdapter implements ITaskAdapter {
         }
       });
 
-      return new TaskItem(taskId, title, contextId);
+      return new TaskItem(taskId, contextId, title, description);
     } catch (e) {
       // todo: handle error
       console.error("error updating task: " + e);

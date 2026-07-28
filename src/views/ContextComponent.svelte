@@ -86,28 +86,27 @@
       return;
     }
 
-    tasks.push(new TaskItem(event.taskId, event.title, event.contextId));
+    tasks.push(new TaskItem(event.taskId, event.contextId, event.title, event.description));
   }
 
-  function handleTaskUpdated(args: TaskUpdatedEventArgs) {
+  function handleTaskUpdated(event: TaskUpdatedEventArgs) {
     // Check if this is an existing task
-    let task = tasks.find(x=> x.id === args.taskId);
+    let task = tasks.find(x=> x.id === event.taskId);
 
     if (!!task) {
       // Task exists, so we must update the properties or delete it.
-      if (context.id == args.contextId) {
+      if (context.id == event.contextId) {
         // Update properties. We must use "map" to trigger an update of the UI.
-        // todo: handle description
-        tasks = tasks.map(x => x.id === args.taskId ? new TaskItem(x.id, args.title, x.contextId) : x);
+        tasks = tasks.map(x => x.id === event.taskId ? new TaskItem(x.id, x.contextId, event.title, event.description) : x);
       } else{
         // Context has changed, remove the task
         tasks.remove(task);
       }
     } else{
       // Task doesn't exist. So we may need to create a new one
-      if (context.id == args.contextId) {
+      if (context.id == event.contextId) {
         console.log("task pushed");
-        tasks.push(new TaskItem(args.taskId, args.title, args.contextId));
+        tasks.push(new TaskItem(event.taskId, event.contextId, event.title, event.description));
       }
     }
   }
