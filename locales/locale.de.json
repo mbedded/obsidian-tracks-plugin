@@ -24,6 +24,8 @@
     "create-task": "Neue Aufgabe erstellen"
   },
   "view": {
+    "aria-lbl-expand-description": "Beschreibung ausklappen",
+    "aria-lbl-collapse-description": "Beschreibung einklappen",
     "btn-create-task": "Aufgabe erstellen",
     "btn-delete-text": "Löschen",
     "btn-reload": "Neu laden",

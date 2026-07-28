@@ -153,10 +153,13 @@
           tabindex="0" class="description"
           ondblclick={onDoubleClickDescription}>
       {task.title}
-      <span bind:this={descriptionIon}
-            onclick={onClickDescription}
-            style:display={!!task.description ? null : "none"}
-            class="description-icon"></span>
+      <button class="description-icon"
+              bind:this={descriptionIon}
+              style:display={!!task.description ? null : "none"}
+              onclick={onClickDescription}
+              tabindex="0"
+              aria-label={isExpanded ? t("view.aria-lbl-collapse-description") : t("view.aria-lbl-expand-description")}
+              aria-expanded={isExpanded}></button>
     </span>
 
     <!-- Delete button right side -->
