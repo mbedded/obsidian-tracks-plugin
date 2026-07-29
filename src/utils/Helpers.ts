@@ -8,13 +8,13 @@ export class Helpers {
   }
 
   /**
-   * Creates a shallow copy of the provided instance.
+   * Creates a deep copy of the provided instance.
    *
    * @param {T} instance - The object to be cloned.
-   * @return {T} A new object that is a shallow copy of the provided instance.
+   * @return {T} A new object that is a deep copy of the provided instance.
    */
   public static clone<T>(instance: T): T {
-    return {...instance};
+    return structuredClone(instance);
   }
 
   /**
