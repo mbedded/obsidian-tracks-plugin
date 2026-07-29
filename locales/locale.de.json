@@ -51,6 +51,12 @@
   },
   "notice": {
     "command-reload": "Aufgaben werden neu geladen...",
+    "error-creating-task": "Fehler beim Erstellen der Aufgabe",
+    "error-deleting-task": "Fehler beim Löschen der Aufgabe",
+    "error-getting-contexts": "Fehler beim laden der Kontexte",
+    "error-getting-tasks": "Fehler beim Laden der Aufgaben",
+    "error-setting-task-done": "Fehler beim setzen der Aufgabe als 'erledigt'",
+    "error-updating-task": "Fehler beim Aktualisieren der Aufgabe",
     "no-contexts-available": "Keine Kontexte verfügbar. Bitte erstellen Sie zuerst einen Kontext und prüfen Sie, ob der Server erreichbar ist.",
     "prefix-error": "Fehler",
     "task-load-completed": "Laden der Aufgaben abgeschlossen.",

@@ -80,8 +80,8 @@ export class TracksAdapter implements ITaskAdapter {
 
       contextAsJson = this.xmlParser.parse(response.text);
     } catch (e) {
-      // todo: handle error
-      console.error("error getting contexts - " + e);
+      this.messenger.send("show_notice_error", t("notice.error-getting-contexts"));
+      Logger.error("Error getting contexts", e)
       return [];
     }
 
@@ -101,7 +101,6 @@ export class TracksAdapter implements ITaskAdapter {
       .sort((a, b) => a.name.localeCompare(b.name));
   }
 
-
   public async getActiveTasks(contextId: number): Promise<TaskItem[]> {
     let responseAsXml;
     try {
@@ -115,8 +114,8 @@ export class TracksAdapter implements ITaskAdapter {
 
       responseAsXml = this.xmlParser.parse(response.text);
     } catch (e) {
-      // todo: handle error
-      console.error("error getting tasks" + e);
+      this.messenger.send("show_notice_error", t("notice.error-getting-tasks"));
+      Logger.error("Error getting tasks", e);
       return [];
     }
 
@@ -146,7 +145,8 @@ export class TracksAdapter implements ITaskAdapter {
       });
 
     } catch (e) {
-      console.error("error toggle todo" + e);
+      this.messenger.send("show_notice_error", t("notice.error-setting-task-done"));
+      Logger.error("Error toggling task as 'done'", e);
       return false;
     }
     return true;
@@ -176,8 +176,8 @@ export class TracksAdapter implements ITaskAdapter {
 
       return new TaskItem(newId, contextId, title, description);
     } catch (e) {
-      // todo: handle error
-      console.error("error creating task: " + e);
+      this.messenger.send("show_notice_error", t("notice.error-creating-task"));
+      Logger.error("Error creating task", e);
       throw e;
     }
   }
@@ -193,7 +193,8 @@ export class TracksAdapter implements ITaskAdapter {
       });
       return true;
     } catch (e) {
-      console.error("error deleting task: " + e);
+      this.messenger.send("show_notice_error", t("notice.error-deleting-task"));
+      Logger.error("Error deleting task", e);
       return false;
     }
   }
@@ -218,8 +219,8 @@ export class TracksAdapter implements ITaskAdapter {
 
       return new TaskItem(taskId, contextId, title, description);
     } catch (e) {
-      // todo: handle error
-      console.error("error updating task: " + e);
+      this.messenger.send("show_notice_error", t("notice.error-updating-task"));
+      Logger.error("Error updating task", e);
       throw e;
     }
   }

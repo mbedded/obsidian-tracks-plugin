@@ -51,6 +51,12 @@
   },
   "notice": {
     "command-reload": "Reloading tasks...",
+    "error-creating-task": "Error creating new task",
+    "error-deleting-task": "Error deleting task",
+    "error-getting-contexts": "Error getting contexts",
+    "error-getting-tasks": "Error getting tasks",
+    "error-setting-task-done": "Error setting task as 'done'",
+    "error-updating-task": "Error updating task",
     "no-contexts-available": "No contexts available. Please create a context first or check if the server is reachable.",
     "prefix-error": "Error",
     "task-load-completed": "Finished loading tasks.",
