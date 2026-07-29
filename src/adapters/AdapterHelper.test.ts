@@ -4,7 +4,7 @@
 import type { RequestUrlParam, RequestUrlResponsePromise } from "obsidian";
 import { test } from "vitest";
 
-// Just added so Jest doesn't throw an error.
+// Just added so Vitest doesn't throw an error.
 test("ignore this file", () => {})
 
 export function emptyRequest(_request: RequestUrlParam | string): RequestUrlResponsePromise {
