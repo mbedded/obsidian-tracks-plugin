@@ -1,4 +1,5 @@
 import type { TaskItem } from "../adapters/TaskClasses";
+import type { ITracksPluginSettings } from "../settings/Settings";
 
 /**
  * Represents a mapping of event names to their associated data types.

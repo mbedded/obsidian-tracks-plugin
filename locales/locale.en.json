@@ -1,13 +1,16 @@
 {
   "settings": {
     "header-tracks-endpoint": "Tracks endpoint",
+    "header-debugging": "Development & Debugging",
     "tracks-password-description": "Your password to access Tracks. The token is readonly and has no rights to to create todos. Please note that the password is stored in plain text for now!",
     "tracks-password-header": "Password",
     "tracks-url-description": "Base URL of your instance of Tracks.",
     "tracks-url-header": "Tracks URL",
     "tracks-url-placeholder": "http://localhost:3000",
     "tracks-username-description": "Your username to access Tracks.",
-    "tracks-username-header": "Username"
+    "tracks-username-header": "Username",
+    "debug-console-log-header": "Enable console logging",
+    "debug-console-log-description": "Write detailed diagnostic messages to the developer console to help troubleshoot issues. Leave this disabled unless you’re debugging or reporting a problem."
   },
   "messages": {
     "no-contexts-existing-description": "Please create a context in your service so this plugin can work.",

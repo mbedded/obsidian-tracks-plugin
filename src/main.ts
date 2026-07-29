@@ -1,5 +1,5 @@
 import { type App, Notice, Plugin, type PluginManifest, requestUrl, WorkspaceLeaf } from "obsidian";
-import { DEFAULT_SETTINGS, type TracksPluginSettings } from "./settings/Settings";
+import { DEFAULT_SETTINGS, type ITracksPluginSettings } from "./settings/Settings";
 import { MainViewModel, VIEW_TYPE_MAIN } from "./views/MainViewModel";
 import { initializeLocalization } from "./main.localization";
 import { TracksAdapter } from "./adapters/TracksAdapter";
@@ -15,7 +15,7 @@ export default class TracksPlugin extends Plugin {
   private static readonly DEFAULT_NOTICE_TIME: number = 3000;
   private static readonly ERROR_NOTICE_TIME: number = 15000;
 
-  private _settings: TracksPluginSettings;
+  private _settings: ITracksPluginSettings;
   private messenger = SimpleMessenger.getInstance();
   private adapter: ITaskAdapter;
 
