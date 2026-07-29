@@ -53,6 +53,10 @@
 
     isExpanded = !isExpanded;
   }
+
+  function stopDoubleClickPropagation(event: MouseEvent) {
+    event.stopPropagation();
+  }
 </script>
 
 <style>
@@ -157,6 +161,7 @@
               bind:this={descriptionIon}
               style:display={!!task.description ? null : "none"}
               onclick={onClickDescription}
+              ondblclick={stopDoubleClickPropagation}
               tabindex="0"
               aria-label={isExpanded ? t("view.aria-lbl-collapse-description") : t("view.aria-lbl-expand-description")}
               aria-expanded={isExpanded}></button>
