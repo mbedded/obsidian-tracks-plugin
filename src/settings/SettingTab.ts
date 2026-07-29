@@ -15,6 +15,11 @@ export class SettingTab extends PluginSettingTab {
 
     containerEl.empty();
 
+    SettingTab.addEndpointSettings(containerEl, this.plugin);
+    SettingTab.addDevSettings(containerEl, this.plugin);
+  }
+
+  private static addEndpointSettings(containerEl: HTMLElement, plugin: TracksPlugin) {
     new SettingGroup(containerEl)
       .setHeading(t("settings.header-tracks-endpoint"))
       .addSetting(setting => setting
@@ -22,35 +27,50 @@ export class SettingTab extends PluginSettingTab {
         .setDesc(t("settings.tracks-url-description"))
         .addText(text => text
           .setPlaceholder(t("settings.tracks-url-placeholder"))
-          .setValue(this.plugin.settings.tracksUrl)
+          .setValue(plugin.settings.tracksUrl)
           .onChange(async (value) => {
             if (value.endsWith("/")) {
               value = value.slice(0, -1);
             }
 
-            this.plugin.settings.tracksUrl = value;
-            await this.plugin.saveSettings();
+            plugin.settings.tracksUrl = value;
+            await plugin.saveSettings();
           })))
       .addSetting(setting => setting
         .setName(t("settings.tracks-username-header"))
         .setDesc(t("settings.tracks-username-description"))
         .addText(text => text
-          .setValue(this.plugin.settings.tracksUsername)
+          .setValue(plugin.settings.tracksUsername)
           .onChange(async (value) => {
-            this.plugin.settings.tracksUsername = value;
-            await this.plugin.saveSettings();
+            plugin.settings.tracksUsername = value;
+            await plugin.saveSettings();
           })))
       .addSetting(setting => setting
         .setName(t("settings.tracks-password-header"))
         .setDesc(t("settings.tracks-password-description"))
         .addText(text => {
-            text.setValue(this.plugin.settings.tracksToken)
+            text.setValue(plugin.settings.tracksToken)
             text.onChange(async (value) => {
-              this.plugin.settings.tracksToken = value;
-              await this.plugin.saveSettings();
+              plugin.settings.tracksToken = value;
+              await plugin.saveSettings();
             });
             text.inputEl.type = "password";
           }
         ));
+  }
+
+  private static addDevSettings(containerEl: HTMLElement, plugin: TracksPlugin) {
+    new SettingGroup(containerEl)
+      .setHeading(t("settings.header-debugging"))
+      .addSetting(x=>x
+        .setName(t("settings.debug-console-log-header"))
+        .setDesc(t("settings.debug-console-log-description"))
+        .addToggle(x=> {
+          x.setValue(plugin.settings.debug.enableConsoleLogging);
+          x.onChange(async (value) =>{
+            plugin.settings.debug.enableConsoleLogging = value;
+            await plugin.saveSettings();
+          });
+        }));
   }
 }

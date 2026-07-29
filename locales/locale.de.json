@@ -1,13 +1,16 @@
 {
   "settings": {
     "header-tracks-endpoint": "Tracks Endpunkt",
+    "header-debugging": "Entwicklung & Debugging",
     "tracks-password-description": "Ihr Passwort für den Zugriff auf Tracks. Das Token ist schreibgeschützt und hat keine Berechtigung, Aufgaben zu erstellen. Bitte beachten Sie, dass das Passwort derzeit im Klartext gespeichert wird!",
     "tracks-password-header": "Passwort",
     "tracks-url-description": "Basis-URL zu Tracks.",
     "tracks-url-header": "Tracks URL",
     "tracks-url-placeholder": "http://localhost:3000",
     "tracks-username-description": "Der Benutzername für die Anmeldung bei Tracks.",
-    "tracks-username-header": "Benutzername"
+    "tracks-username-header": "Benutzername",
+    "debug-console-log-header": "Konsolenprotokollierung aktivieren",
+    "debug-console-log-description": "Schreibt ausführliche Diagnosemeldungen in die Entwicklerkonsole, um die Fehlersuche zu erleichtern. Lassen Sie diese Option deaktiviert, sofern Sie nicht gerade debuggen oder ein Problem melden."
   },
   "messages": {
     "no-contexts-existing-description": "Bitte erstellen Sie einen Kontext in Ihrem Dienst, damit dieses Plugin funktionieren kann.",
