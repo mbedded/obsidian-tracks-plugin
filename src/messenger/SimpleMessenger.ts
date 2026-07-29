@@ -50,6 +50,10 @@ export class SimpleMessenger implements IMessenger {
     const filteredHandlers = handlers.filter((registeredHandler) => registeredHandler !== handler);
     this.listeners[event] = filteredHandlers as typeof this.listeners[K];
   }
+
+  public dispose() {
+    this.listeners = {};
+  }
 }
 
 export default SimpleMessenger.getInstance();

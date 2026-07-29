@@ -103,6 +103,7 @@ export default class TracksPlugin extends Plugin {
   }
 
   onunload() {
+    this.messenger.dispose();
   }
 
   async loadSettings() {
