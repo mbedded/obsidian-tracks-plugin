@@ -15,6 +15,7 @@ export type EventMap = {
   task_created: TaskCreatedEventArgs;
   update_task: TaskItem;
   task_updated: TaskUpdatedEventArgs;
+  settings_changed: SettingsChangedEventArgs;
 };
 
 export type TaskCreatedEventArgs = {
@@ -30,6 +31,16 @@ export type TaskUpdatedEventArgs = {
   title: string;
   description: string;
 };
+
+export type SettingsChangedEventArgs = {
+  type: SettingsType;
+  settings: ITracksPluginSettings;
+};
+
+export enum SettingsType {
+  Endpoint,
+  Debugging
+}
 
 /**
  * Interface for a messenger that facilitates event-based communication.
@@ -63,4 +74,12 @@ export interface IMessenger {
    * @return {void} Indicates that the handler has been successfully unregistered.
    */
   unregister<K extends keyof EventMap>(event: K, handler: (payload: EventMap[K]) => void): void;
+
+  /**
+   * Releases all resources used by the object and performs necessary cleanup.
+   * This method should be called when the object is no longer needed to prevent memory leaks.
+   *
+   * @return {void} No return value.
+   */
+  dispose():void;
 }
