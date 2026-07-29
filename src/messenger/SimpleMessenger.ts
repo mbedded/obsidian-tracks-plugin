@@ -3,6 +3,7 @@ import type { IMessenger, EventMap } from "./IMessenger";
 /**
  * SimpleMessenger is a utility class designed to manage event-based communication.
  * It allows for registration of listeners for specific events and the dispatching of payloads to those listeners.
+ * Please note that we're using type-safe events by using the EventMap to define events and the argument types.
  */
 export class SimpleMessenger implements IMessenger {
 
