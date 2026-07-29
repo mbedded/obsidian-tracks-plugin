@@ -3,6 +3,8 @@ import { XMLParser } from "fast-xml-parser";
 import type { ITaskAdapter } from "./ITaskAdapter";
 import { t } from "../localizer/Localizer";
 import type { RequestUrlParam, RequestUrlResponsePromise } from "obsidian";
+import { Logger } from "../utils/Logger";
+import type { IMessenger } from "../messenger/IMessenger";
 
 /**
  * This adapter implements the ITaskAdapter interface for Tracks.
@@ -21,7 +23,8 @@ export class TracksAdapter implements ITaskAdapter {
    */
   constructor(private baseUrl: string,
               private basicToken: string,
-              private doRequest: (request: RequestUrlParam | string) => RequestUrlResponsePromise) {
+              private doRequest: (request: RequestUrlParam | string) => RequestUrlResponsePromise,
+              private messenger: IMessenger) {
   }
 
   public getDisplayInfo(): string {

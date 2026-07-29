@@ -3,19 +3,19 @@ import { mount, unmount } from "svelte";
 import EditTaskComponent from "./EditTaskComponent.svelte";
 import type { ITaskAdapter } from "../adapters/ITaskAdapter";
 import type { TaskItem } from "../adapters/TaskClasses";
-import { SimpleMessenger } from "../messenger/SimpleMessenger";
-import type { TaskUpdatedEventArgs } from "../messenger/IMessenger";
+import type { IMessenger, TaskUpdatedEventArgs } from "../messenger/IMessenger";
 
 export class EditTaskModal extends Modal {
   private view: ReturnType<typeof EditTaskComponent> | null = null;
   private adapter: ITaskAdapter;
   private task: TaskItem;
-  private messenger = SimpleMessenger.getInstance();
+  private messenger: IMessenger;
 
-  constructor(app: App, adapter: ITaskAdapter, task: TaskItem) {
+  constructor(app: App, adapter: ITaskAdapter, task: TaskItem, messenger: IMessenger) {
     super(app);
     this.adapter = adapter;
     this.task = task;
+    this.messenger = messenger;
   }
 
   async onOpen() {
@@ -50,7 +50,12 @@ export class EditTaskModal extends Modal {
 
     // const task = await this.adapter.createTask(contextId, title, description);
     // todo: update views. check contextId to add/remove task to the matching context
-    const args: TaskUpdatedEventArgs = {taskId: task.id, contextId: task.contextId, title: task.title, description: task.description};
+    const args: TaskUpdatedEventArgs = {
+      taskId: task.id,
+      contextId: task.contextId,
+      title: task.title,
+      description: task.description
+    };
     this.messenger.send("task_updated", args);
     this.close();
   }

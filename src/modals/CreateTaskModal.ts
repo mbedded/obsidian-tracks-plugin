@@ -2,17 +2,18 @@ import { type App, Modal } from "obsidian";
 import { mount, unmount } from "svelte";
 import CreateTaskComponent from "./CreateTaskComponent.svelte";
 import type { ITaskAdapter } from "../adapters/ITaskAdapter";
-import { SimpleMessenger } from "../messenger/SimpleMessenger";
 import { t } from "../localizer/Localizer";
+import type { IMessenger } from "../messenger/IMessenger";
 
 export class CreateTaskModal extends Modal {
   private view: ReturnType<typeof CreateTaskComponent> | null = null;
   private adapter: ITaskAdapter;
-  private messenger = SimpleMessenger.getInstance();
+  private messenger: IMessenger;
 
-  constructor(app: App, adapter: ITaskAdapter) {
+  constructor(app: App, adapter: ITaskAdapter, messenger: IMessenger) {
     super(app);
     this.adapter = adapter;
+    this.messenger = messenger;
   }
 
   async onOpen() {
@@ -49,7 +50,12 @@ export class CreateTaskModal extends Modal {
     }
 
     const task = await this.adapter.createTask(contextId, title, description);
-    this.messenger.send("task_created", {taskId: task.id, contextId: contextId, title: title, description: description});
+    this.messenger.send("task_created", {
+      taskId: task.id,
+      contextId: contextId,
+      title: title,
+      description: description
+    });
     this.close();
   }
 }
