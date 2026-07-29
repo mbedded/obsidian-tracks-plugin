@@ -3,6 +3,10 @@
  */
 export class Helpers {
 
+  private constructor() {
+    // Prevent instantiation
+  }
+
   /**
    * Creates a shallow copy of the provided instance.
    *
