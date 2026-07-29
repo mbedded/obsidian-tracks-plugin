@@ -2,23 +2,12 @@
  * This is a general helper-class for testing the adapters.
  */
 import type { RequestUrlParam, RequestUrlResponsePromise } from "obsidian";
-import { test } from "@jest/globals";
-
-type JestTestFn = typeof test;
-
-export const testIf = (
-  condition: boolean,
-  ...args: Parameters<JestTestFn>
-): ReturnType<JestTestFn> => {
-  return condition ? test(...args) : test.skip(...args);
-};
-
-export const isCiBuild = process.env.CI_BUILD === "true";
+import { test } from "vitest";
 
 // Just added so Jest doesn't throw an error.
 test("ignore this file", () => {})
 
-export function emptyRequest(request: RequestUrlParam | string): RequestUrlResponsePromise {
+export function emptyRequest(_request: RequestUrlParam | string): RequestUrlResponsePromise {
   return {} as RequestUrlResponsePromise;
 }
 

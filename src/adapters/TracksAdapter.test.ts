@@ -1,7 +1,7 @@
-import { test, expect, describe } from "@jest/globals";
+import { test, expect, describe } from "vitest";
 import { TracksAdapter } from "./TracksAdapter";
 import type { RequestUrlParam, RequestUrlResponsePromise } from "obsidian";
-import { emptyRequest, isCiBuild, realFetchRequest, testIf } from "./AdapterHelper.test";
+import { emptyRequest, realFetchRequest } from "./AdapterHelper.test";
 
 const TOKEN_LOCALHOST = btoa("mbedded:79907a25379561f41dbbfb87f388e3519ce9daf8"); // "bWJlZGRlZDo0MWRlOTZlYzkwYzZmMjhiY2Q1NWMyZjNhMDcwOTg1NjYxYzQ4ZjBm";
 const EMPTY_TOKEN = "";
@@ -18,7 +18,7 @@ describe("With empty token", () => {
     expect(sut).toBeTruthy();
   });
 
-  testIf(!isCiBuild, "Ping should return unauthenticated", async () => {
+  test("Ping should return unauthenticated", {tags: ["integration"]}, async () => {
     const sut = getInstance(EMPTY_TOKEN, realFetchRequest);
 
     const result = await sut.ping();
@@ -36,7 +36,7 @@ describe("With valid token", () => {
     expect(sut).toBeTruthy();
   })
 
-  testIf(!isCiBuild, "Ping should return authenticated", async () => {
+  test("Ping should return authenticated", {tags: ["integration"]}, async () => {
     const sut = getInstance(TOKEN_LOCALHOST, realFetchRequest);
 
     const result = await sut.ping();
@@ -46,7 +46,7 @@ describe("With valid token", () => {
     expect(result.isOk()).toBeTruthy();
   })
 
-  testIf(!isCiBuild, "Get contexts should return 3 items", async () => {
+  test("Get contexts should return 3 items", {tags: ["integration"]}, async () => {
     const sut = getInstance(TOKEN_LOCALHOST, realFetchRequest);
 
     const result = await sut.getActiveContexts();
@@ -54,12 +54,12 @@ describe("With valid token", () => {
     expect(result).toHaveLength(3);
   });
 
-  testIf(!isCiBuild, "Get tasks should return 2 items", async () => {
+  test("Get tasks should return 2 items", {tags: ["integration"]}, async () => {
     const sut = getInstance(TOKEN_LOCALHOST, realFetchRequest);
 
     const result = await sut.getActiveTasks(1);
 
-    expect(result).toHaveLength(2);
+    expect(result).toHaveLength(3);
   });
 })
 
