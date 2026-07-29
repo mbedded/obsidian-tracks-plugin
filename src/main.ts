@@ -43,7 +43,7 @@ export default class TracksPlugin extends Plugin {
     this.messenger.on("update_task", task => {
         const clone = Helpers.clone(task);
         const adapter = this.getAdapter();
-        new EditTaskModal(this.app, adapter, clone).open();
+        new EditTaskModal(this.app, adapter, clone, this.messenger).open();
       }
     )
   }
@@ -95,7 +95,7 @@ export default class TracksPlugin extends Plugin {
       name: t("commands.create-task"),
       callback: () => {
         const adapter = this.getAdapter();
-        new CreateTaskModal(this.app, adapter).open();
+        new CreateTaskModal(this.app, adapter, this.messenger).open();
       }
     })
   }
@@ -115,7 +115,7 @@ export default class TracksPlugin extends Plugin {
   }
 
   private getAdapter(): ITaskAdapter {
-    return this.adapter ??= new TracksAdapter(this.settings.tracksUrl, this.settings.getBasicToken(), requestUrl);
+    return this.adapter ??= new TracksAdapter(this.settings.tracksUrl, this.settings.getBasicToken(), requestUrl, this.messenger);
   }
 
   async activateView() {

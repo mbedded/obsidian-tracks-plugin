@@ -2,13 +2,14 @@ import { test, expect, describe } from "vitest";
 import { TracksAdapter } from "./TracksAdapter";
 import type { RequestUrlParam, RequestUrlResponsePromise } from "obsidian";
 import { emptyRequest, realFetchRequest } from "./AdapterHelper.test";
+import { DoNothingMessenger } from "../messenger/SimpleMessenger.test";
 
 const TOKEN_LOCALHOST = btoa("mbedded:79907a25379561f41dbbfb87f388e3519ce9daf8"); // "bWJlZGRlZDo0MWRlOTZlYzkwYzZmMjhiY2Q1NWMyZjNhMDcwOTg1NjYxYzQ4ZjBm";
 const EMPTY_TOKEN = "";
 const BASE_ADDRESS = "http://localhost:8000";
 
 function getInstance(token: string, doRequest: (request: RequestUrlParam | string) => RequestUrlResponsePromise) {
-  return new TracksAdapter(BASE_ADDRESS, token, doRequest);
+  return new TracksAdapter(BASE_ADDRESS, token, doRequest, new DoNothingMessenger());
 }
 
 describe("With empty token", () => {
