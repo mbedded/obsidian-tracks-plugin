@@ -10,14 +10,16 @@ import { CreateTaskModal } from "./modals/CreateTaskModal";
 import type { ITaskAdapter } from "./adapters/ITaskAdapter";
 import { Helpers } from "./utils/Helpers";
 import { EditTaskModal } from "./modals/EditTaskModal";
+import { Logger } from "./utils/Logger";
 
 export default class TracksPlugin extends Plugin {
   private static readonly DEFAULT_NOTICE_TIME: number = 3000;
   private static readonly ERROR_NOTICE_TIME: number = 15000;
 
-  private _settings: ITracksPluginSettings;
   private messenger = SimpleMessenger.getInstance();
   private adapter: ITaskAdapter;
+
+  public settings: ITracksPluginSettings;
 
   constructor(app: App, manifest: PluginManifest) {
     super(app, manifest);
@@ -46,12 +48,8 @@ export default class TracksPlugin extends Plugin {
     )
   }
 
-  public get settings() {
-    return this._settings;
-  }
-
   async onload() {
-    await this.loadSettings();
+    await this.loadSettingsAndInitialize();
 
     // This adds a settings tab so the user can configure various aspects of the plugin
     this.addSettingTab(new SettingTab(this.app, this));
@@ -106,8 +104,10 @@ export default class TracksPlugin extends Plugin {
     this.messenger.dispose();
   }
 
-  async loadSettings() {
-    this._settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+  async loadSettingsAndInitialize() {
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+
+    Logger.setLoggers(this.settings.debug.enableConsoleLogging);
   }
 
   async saveSettings() {

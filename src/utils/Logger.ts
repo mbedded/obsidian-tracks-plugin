@@ -7,17 +7,21 @@ export class Logger {
   private static readonly doNothing = (message: string, ...optionalParams: unknown[]): void => {
   }
 
-  private static readonly infoDefault = (message: string, ...optionalParams: unknown[]): void => {
+  private static readonly defaultInfo = (message: string, ...optionalParams: unknown[]): void => {
     console.info(message, ...optionalParams);
   }
 
-  private static readonly warnDefault = (message: string, ...optionalParams: unknown[]): void => {
+  private static readonly defaultWarn = (message: string, ...optionalParams: unknown[]): void => {
     console.warn(message, ...optionalParams);
   }
 
-  private static readonly errorDefault = (message: string, ...optionalParams: unknown[]): void => {
+  private static readonly defaultError = (message: string, ...optionalParams: unknown[]): void => {
     console.error(message, ...optionalParams);
   }
+
+  public static info: (message: string, ...optionalParams: unknown[]) => void = Logger.defaultInfo;
+  public static warn: (message: string, ...optionalParams: unknown[]) => void = Logger.defaultWarn;
+  public static error: (message: string, ...optionalParams: unknown[]) => void = Logger.defaultError;
 
   private constructor() {
     // Prevent instantiation
@@ -25,7 +29,7 @@ export class Logger {
 
   static {
     this.messenger = SimpleMessenger.getInstance();
-    this.messenger.on("settings_changed", this.handleSettingsChanged)
+    this.messenger.on("settings_changed", this.handleSettingsChanged.bind(this))
   }
 
   private static handleSettingsChanged(args: SettingsChangedEventArgs) {
@@ -33,22 +37,21 @@ export class Logger {
       return;
     }
 
-    const settings = args.settings.debug;
+    this.setLoggers(args.settings.debug.enableConsoleLogging);
+  }
 
+  static setLoggers(enableConsoleLogging: boolean) {
     // I'm using function pointers to improve performance instead of if-else every call.
-    if (settings.enableConsoleLogging) {
-      Logger.info = Logger.infoDefault;
-      Logger.warn = Logger.warnDefault;
+    if (enableConsoleLogging) {
+      Logger.info = Logger.defaultInfo;
+      Logger.warn = Logger.defaultWarn;
     } else {
       Logger.info = Logger.doNothing;
       Logger.warn = Logger.doNothing;
     }
 
     // Always enable error logging
-    Logger.error = Logger.errorDefault;
+    Logger.error = Logger.defaultError;
   }
 
-  public static info: (message: string, ...optionalParams: unknown[]) => void = Logger.infoDefault;
-  public static warn: (message: string, ...optionalParams: unknown[]) => void = Logger.warnDefault;
-  public static error: (message: string, ...optionalParams: unknown[]) => void = Logger.errorDefault;
 }
