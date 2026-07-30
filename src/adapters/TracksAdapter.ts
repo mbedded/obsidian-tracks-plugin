@@ -20,6 +20,7 @@ export class TracksAdapter implements ITaskAdapter {
    * @param baseUrl The base url to reach Tracks.
    * @param basicToken The basic token (base64) to access Tracks.
    * @param doRequest The method to execute the request. Passed as a parameter to be unit-testable.
+   * @param messenger The messenger to use for events.
    */
   constructor(private baseUrl: string,
               private basicToken: string,
