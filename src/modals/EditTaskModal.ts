@@ -47,9 +47,6 @@ export class EditTaskModal extends Modal {
     }
 
     const task = await this.adapter.updateTask(editedTask.id, editedTask.contextId, editedTask.title, editedTask.description);
-
-    // const task = await this.adapter.createTask(contextId, title, description);
-    // todo: update views. check contextId to add/remove task to the matching context
     const args: TaskUpdatedEventArgs = {
       taskId: task.id,
       contextId: task.contextId,
