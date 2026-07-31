@@ -73,7 +73,7 @@ export default class TracksPlugin extends Plugin {
       VIEW_TYPE_MAIN,
       (leaf) => {
         const adapter = this.getAdapter();
-        return new MainViewModel(leaf, adapter);
+        return new MainViewModel(leaf, adapter, this.messenger);
       }
     );
   }

@@ -3,6 +3,7 @@ import { mount, unmount } from "svelte";
 import MainViewComponent from "./MainViewComponent.svelte";
 import type { ITaskAdapter } from "../adapters/ITaskAdapter";
 import { t } from "../localizer/Localizer";
+import type { IMessenger } from "../messenger/IMessenger";
 
 export const VIEW_TYPE_MAIN = "main-view";
 
@@ -12,11 +13,13 @@ export const VIEW_TYPE_MAIN = "main-view";
  */
 export class MainViewModel extends ItemView {
   private readonly taskAdapter: ITaskAdapter;
+  private readonly messenger: IMessenger;
   private mainView: ReturnType<typeof MainViewComponent> | undefined;
 
-  constructor(leaf: WorkspaceLeaf, taskAdapter: ITaskAdapter) {
+  constructor(leaf: WorkspaceLeaf, taskAdapter: ITaskAdapter, messenger: IMessenger) {
     super(leaf);
     this.taskAdapter = taskAdapter;
+    this.messenger = messenger;
   }
 
   getViewType() {
@@ -33,6 +36,7 @@ export class MainViewModel extends ItemView {
       target: this.contentEl,
       props: {
         adapter: this.taskAdapter,
+        messenger: this.messenger,
       }
     });
   }
