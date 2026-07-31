@@ -3,7 +3,7 @@ import { XMLParser } from "fast-xml-parser";
 import type { ITaskAdapter } from "./ITaskAdapter";
 import { t } from "../localizer/Localizer";
 import type { RequestUrlParam, RequestUrlResponsePromise } from "obsidian";
-import { Logger } from "../utils/Logger";
+import { type ILogger } from "../utils/Logger";
 import type { IMessenger } from "../messenger/IMessenger";
 
 /**
@@ -21,11 +21,13 @@ export class TracksAdapter implements ITaskAdapter {
    * @param basicToken The basic token (base64) to access Tracks.
    * @param doRequest The method to execute the request. Passed as a parameter to be unit-testable.
    * @param messenger The messenger to use for events.
+   * @param logger The logger to log details.
    */
   constructor(private baseUrl: string,
               private basicToken: string,
               private doRequest: (request: RequestUrlParam | string) => RequestUrlResponsePromise,
-              private messenger: IMessenger) {
+              private messenger: IMessenger,
+              private logger: ILogger) {
   }
 
   public getDisplayInfo(): string {
@@ -82,7 +84,7 @@ export class TracksAdapter implements ITaskAdapter {
       contextAsJson = this.xmlParser.parse(response.text);
     } catch (e) {
       this.messenger.send("show_notice_error", t("notice.error-getting-contexts"));
-      Logger.error("Error getting contexts", e)
+      this.logger.error("Error getting contexts", e)
       return [];
     }
 
@@ -116,7 +118,7 @@ export class TracksAdapter implements ITaskAdapter {
       responseAsXml = this.xmlParser.parse(response.text);
     } catch (e) {
       this.messenger.send("show_notice_error", t("notice.error-getting-tasks"));
-      Logger.error("Error getting tasks", e);
+      this.logger.error("Error getting tasks", e);
       return [];
     }
 
@@ -147,7 +149,7 @@ export class TracksAdapter implements ITaskAdapter {
 
     } catch (e) {
       this.messenger.send("show_notice_error", t("notice.error-setting-task-done"));
-      Logger.error("Error toggling task as 'done'", e);
+      this.logger.error("Error toggling task as 'done'", e);
       return false;
     }
     return true;
@@ -178,7 +180,7 @@ export class TracksAdapter implements ITaskAdapter {
       return new TaskItem(newId, contextId, title, description);
     } catch (e) {
       this.messenger.send("show_notice_error", t("notice.error-creating-task"));
-      Logger.error("Error creating task", e);
+      this.logger.error("Error creating task", e);
       throw e;
     }
   }
@@ -195,7 +197,7 @@ export class TracksAdapter implements ITaskAdapter {
       return true;
     } catch (e) {
       this.messenger.send("show_notice_error", t("notice.error-deleting-task"));
-      Logger.error("Error deleting task", e);
+      this.logger.error("Error deleting task", e);
       return false;
     }
   }
@@ -221,7 +223,7 @@ export class TracksAdapter implements ITaskAdapter {
       return new TaskItem(taskId, contextId, title, description);
     } catch (e) {
       this.messenger.send("show_notice_error", t("notice.error-updating-task"));
-      Logger.error("Error updating task", e);
+      this.logger.error("Error updating task", e);
       throw e;
     }
   }
