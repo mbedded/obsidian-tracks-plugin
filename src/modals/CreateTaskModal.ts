@@ -6,9 +6,9 @@ import { t } from "../localizer/Localizer";
 import type { IMessenger } from "../messenger/IMessenger";
 
 export class CreateTaskModal extends Modal {
+  private readonly adapter: ITaskAdapter;
+  private readonly messenger: IMessenger;
   private view: ReturnType<typeof CreateTaskComponent> | null = null;
-  private adapter: ITaskAdapter;
-  private messenger: IMessenger;
 
   constructor(app: App, adapter: ITaskAdapter, messenger: IMessenger) {
     super(app);

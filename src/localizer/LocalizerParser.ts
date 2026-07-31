@@ -7,7 +7,7 @@ import en from "../../locales/locale.en.json";
  */
 export class LocalizerParser {
 
-  private files: [string, object][] = [
+  private readonly files: [string, object][] = [
     ["de", de],
     ["en", en],
   ];
