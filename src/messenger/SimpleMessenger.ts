@@ -1,4 +1,5 @@
 import type { IMessenger, EventMap } from "./IMessenger";
+import { type ILogger } from "../utils/Logger";
 
 /**
  * SimpleMessenger is a utility class designed to manage event-based communication.
@@ -7,16 +8,7 @@ import type { IMessenger, EventMap } from "./IMessenger";
  */
 export class SimpleMessenger implements IMessenger {
 
-  private static instance: IMessenger;
-
-  private constructor() {
-  }
-
-  public static getInstance(): IMessenger {
-    if (!SimpleMessenger.instance) {
-      SimpleMessenger.instance = new SimpleMessenger();
-    }
-    return SimpleMessenger.instance;
+  public constructor(private readonly logger: ILogger) {
   }
 
   private listeners: {
@@ -32,6 +24,7 @@ export class SimpleMessenger implements IMessenger {
   };
 
   public send<K extends keyof EventMap>(event: K, payload: EventMap[K]): void {
+    this.logger.info(`Invoke ${event}`)
     const handlers = this.listeners[event];
     if (!handlers) {
       return;
@@ -55,5 +48,3 @@ export class SimpleMessenger implements IMessenger {
     this.listeners = {};
   }
 }
-
-export default SimpleMessenger.getInstance();

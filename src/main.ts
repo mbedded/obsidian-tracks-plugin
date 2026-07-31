@@ -11,18 +11,24 @@ import type { ITaskAdapter } from "./adapters/ITaskAdapter";
 import { Helpers } from "./utils/Helpers";
 import { EditTaskModal } from "./modals/EditTaskModal";
 import { Logger } from "./utils/Logger";
+import type { IMessenger } from "./messenger/IMessenger";
 
 export default class TracksPlugin extends Plugin {
   private static readonly DEFAULT_NOTICE_TIME: number = 3000;
   private static readonly ERROR_NOTICE_TIME: number = 15000;
 
-  private messenger = SimpleMessenger.getInstance();
+  private readonly messenger: IMessenger;
+  private readonly logger: Logger;
   private adapter: ITaskAdapter;
 
   public settings: ITracksPluginSettings;
 
   constructor(app: App, manifest: PluginManifest) {
     super(app, manifest);
+
+    this.logger = new Logger();
+    this.messenger = new SimpleMessenger(this.logger);
+    this.logger.initialize(this.messenger);
 
     initializeLocalization();
     this.registerEvents();
@@ -107,7 +113,7 @@ export default class TracksPlugin extends Plugin {
   async loadSettingsAndInitialize() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 
-    Logger.setLoggers(this.settings.debug.enableConsoleLogging);
+    this.logger.setLoggers(this.settings.debug.enableConsoleLogging);
   }
 
   async saveSettings() {
@@ -115,7 +121,7 @@ export default class TracksPlugin extends Plugin {
   }
 
   private getAdapter(): ITaskAdapter {
-    return this.adapter ??= new TracksAdapter(this.settings.tracksUrl, this.settings.getBasicToken(), requestUrl, this.messenger);
+    return this.adapter ??= new TracksAdapter(this.settings.tracksUrl, this.settings.getBasicToken(), requestUrl, this.messenger, this.logger);
   }
 
   async activateView() {

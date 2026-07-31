@@ -1,9 +1,21 @@
-import { SimpleMessenger } from "../messenger/SimpleMessenger";
 import { type IMessenger, type SettingsChangedEventArgs, SettingsType } from "../messenger/IMessenger";
 
-export class Logger {
-  private static messenger: IMessenger | null;
+/**
+ * Represents a logging interface that provides methods for logging messages
+ * with varying levels of severity.
+ */
+export interface ILogger {
+  info: (message: string, ...optionalParams: unknown[]) => void;
+  warn: (message: string, ...optionalParams: unknown[]) => void;
+  error: (message: string, ...optionalParams: unknown[]) => void;
+}
 
+/**
+ * A logger implementation that provides methods for logging informational, warning, and error messages.
+ * The logger behavior can be dynamically updated based on application settings.
+ * It uses function pointers to optimize performance by avoiding condition checks during logging.
+ */
+export class Logger implements ILogger {
   private static readonly doNothing = (message: string, ...optionalParams: unknown[]): void => {
   }
 
@@ -19,20 +31,23 @@ export class Logger {
     console.error(message, ...optionalParams);
   }
 
-  public static info: (message: string, ...optionalParams: unknown[]) => void = Logger.defaultInfo;
-  public static warn: (message: string, ...optionalParams: unknown[]) => void = Logger.defaultWarn;
-  public static error: (message: string, ...optionalParams: unknown[]) => void = Logger.defaultError;
+  public info: (message: string, ...optionalParams: unknown[]) => void = Logger.defaultInfo;
+  public warn: (message: string, ...optionalParams: unknown[]) => void = Logger.defaultWarn;
+  public error: (message: string, ...optionalParams: unknown[]) => void = Logger.defaultError;
 
-  private constructor() {
-    // Prevent instantiation
-  }
+  private messenger: IMessenger;
 
-  static {
-    this.messenger = SimpleMessenger.getInstance();
+  public initialize(messenger: IMessenger): void{
+    if (this.messenger != null){
+      // Ensure this method is called only once.
+      return;
+    }
+
+    this.messenger = messenger;
     this.messenger.on("settings_changed", this.handleSettingsChanged.bind(this))
   }
 
-  private static handleSettingsChanged(args: SettingsChangedEventArgs) {
+  private handleSettingsChanged(args: SettingsChangedEventArgs) {
     if (args.type != SettingsType.Debugging) {
       return;
     }
@@ -40,18 +55,18 @@ export class Logger {
     this.setLoggers(args.settings.debug.enableConsoleLogging);
   }
 
-  static setLoggers(enableConsoleLogging: boolean) {
+  public setLoggers(enableConsoleLogging: boolean) {
     // I'm using function pointers to improve performance instead of if-else every call.
     if (enableConsoleLogging) {
-      Logger.info = Logger.defaultInfo;
-      Logger.warn = Logger.defaultWarn;
+      this.info = Logger.defaultInfo;
+      this.warn = Logger.defaultWarn;
     } else {
-      Logger.info = Logger.doNothing;
-      Logger.warn = Logger.doNothing;
+      this.info = Logger.doNothing;
+      this.warn = Logger.doNothing;
     }
 
     // Always enable error logging
-    Logger.error = Logger.defaultError;
+    this.error = Logger.defaultError;
   }
 
 }
