@@ -7,16 +7,18 @@
   import ErrorComponent from "./ErrorComponent.svelte";
   import { onMount } from "svelte";
   import { SimpleMessenger } from "../messenger/SimpleMessenger";
+  import type { IMessenger } from "../messenger/IMessenger";
 
   interface Props {
     adapter: ITaskAdapter;
+    messenger: IMessenger;
   }
 
   let {
     adapter,
+    messenger
   }: Props = $props();
 
-  let messenger = SimpleMessenger.getInstance();
   let loading = $state(true);
   let hasError = $state(false);
   let errorHeader = $state("error-header");
@@ -116,7 +118,7 @@
     {/if}
 
     {#each contexts as context}
-      <ContextComponent adapter={adapter} context={context} />
+      <ContextComponent adapter={adapter} context={context} messenger={messenger} />
     {/each}
   {/if}
 

@@ -3,11 +3,12 @@
   import { setIcon } from "obsidian";
   import { TaskItem } from "../adapters/TaskClasses";
   import { t } from "../localizer/Localizer";
-  import { SimpleMessenger } from "../messenger/SimpleMessenger";
+  import type { IMessenger } from "../messenger/IMessenger";
 
   interface Props {
     // The entry to display and interact with.
     task: TaskItem;
+    messenger: IMessenger;
     // Function (callback to parent) to mark an entry as done.
     markTaskAsDone: (x: TaskItem) => Promise<void>
     // Function (callback to parent) to delete entry.
@@ -16,11 +17,11 @@
 
   let {
     task,
+    messenger,
     markTaskAsDone,
     deleteTask
   }: Props = $props();
 
-  const messenger = SimpleMessenger.getInstance();
   let isDoneRunning = $state(false);
   let isDeleteRunning = $state(false);
   let isExpanded = $state(false);

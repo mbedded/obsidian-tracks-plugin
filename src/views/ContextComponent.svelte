@@ -5,20 +5,19 @@
   import SpinnerComponent from "./SpinnerComponent.svelte";
   import TaskComponent from "./TaskComponent.svelte";
   import { t } from "../localizer/Localizer";
-  import { SimpleMessenger } from "../messenger/SimpleMessenger";
-  import type { TaskCreatedEventArgs, TaskUpdatedEventArgs } from "../messenger/IMessenger";
+  import type { IMessenger, TaskCreatedEventArgs, TaskUpdatedEventArgs } from "../messenger/IMessenger";
 
   interface Props {
     adapter: ITaskAdapter;
+    messenger: IMessenger;
     context: ContextItem;
   }
 
   let {
     context,
-    adapter,
+    messenger,
+    adapter
   }: Props = $props();
-
-  let messenger = SimpleMessenger.getInstance();
 
   let isLoading = $state(false);
   let isSaving = $state(false);
@@ -91,18 +90,18 @@
 
   function handleTaskUpdated(event: TaskUpdatedEventArgs) {
     // Check if this is an existing task
-    let task = tasks.find(x=> x.id === event.taskId);
+    let task = tasks.find(x => x.id === event.taskId);
 
     if (!!task) {
       // Task exists, so we must update the properties or delete it.
       if (context.id == event.contextId) {
         // Update properties. We must use "map" to trigger an update of the UI.
         tasks = tasks.map(x => x.id === event.taskId ? new TaskItem(x.id, x.contextId, event.title, event.description) : x);
-      } else{
+      } else {
         // Context has changed, remove the task
         tasks.remove(task);
       }
-    } else{
+    } else {
       // Task doesn't exist. So we may need to create a new one
       if (context.id == event.contextId) {
         console.log("task pushed");
@@ -151,7 +150,8 @@
     {#each tasks as task (task.id)}
       <TaskComponent task={task}
                      markTaskAsDone={markTaskAsDone}
-                     deleteTask={deleteTask}/>
+                     deleteTask={deleteTask}
+                     messenger={messenger} />
     {/each}
 
   {:else}
