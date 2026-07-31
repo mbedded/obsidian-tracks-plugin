@@ -6,10 +6,10 @@ import type { TaskItem } from "../adapters/TaskClasses";
 import type { IMessenger, TaskUpdatedEventArgs } from "../messenger/IMessenger";
 
 export class EditTaskModal extends Modal {
+  private readonly adapter: ITaskAdapter;
+  private readonly task: TaskItem;
+  private readonly messenger: IMessenger;
   private view: ReturnType<typeof EditTaskComponent> | null = null;
-  private adapter: ITaskAdapter;
-  private task: TaskItem;
-  private messenger: IMessenger;
 
   constructor(app: App, adapter: ITaskAdapter, task: TaskItem, messenger: IMessenger) {
     super(app);

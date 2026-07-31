@@ -3,7 +3,7 @@ import TracksPlugin from "../main";
 import { t } from "../localizer/Localizer";
 
 export class SettingTab extends PluginSettingTab {
-  plugin: TracksPlugin;
+  private readonly plugin: TracksPlugin;
 
   constructor(app: App, plugin: TracksPlugin) {
     super(app, plugin);

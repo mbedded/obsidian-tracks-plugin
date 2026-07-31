@@ -23,11 +23,11 @@ export class TracksAdapter implements ITaskAdapter {
    * @param messenger The messenger to use for events.
    * @param logger The logger to log details.
    */
-  constructor(private baseUrl: string,
-              private basicToken: string,
-              private doRequest: (request: RequestUrlParam | string) => RequestUrlResponsePromise,
-              private messenger: IMessenger,
-              private logger: ILogger) {
+  constructor(private readonly baseUrl: string,
+              private readonly basicToken: string,
+              private readonly doRequest: (request: RequestUrlParam | string) => RequestUrlResponsePromise,
+              private readonly messenger: IMessenger,
+              private readonly logger: ILogger) {
   }
 
   public getDisplayInfo(): string {

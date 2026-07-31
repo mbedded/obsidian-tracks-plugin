@@ -24,9 +24,9 @@ export class ContextItem {
 }
 
 export class PingResult {
-  isReachable: boolean;
-  isAuthenticated: boolean;
-  message: string;
+  public readonly isReachable: boolean;
+  public readonly isAuthenticated: boolean;
+  public readonly message: string;
 
   constructor(isReachable: boolean, isAuthenticated: boolean, message: string = "") {
     this.isReachable = isReachable;

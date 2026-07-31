@@ -19,7 +19,7 @@ export class Localizer {
    * @param {Record<string, Record<string, string>>} texts - A nested record containing localization data, organized by keys and subkeys.
    * @return {void} Throws an error if the texts parameter is null or undefined.
    */
-  public initialize(texts: Record<string, Record<string, string>>) {
+  public initialize(texts: Record<string, Record<string, string>>): void {
     if (texts == null) {
       throw Error("Localizer cannot be initialized using empty texts");
     }
